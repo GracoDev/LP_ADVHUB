@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #050505; /* Preto profundo */
+  color: #ffffff;
+  /* Glow sutil dourado no topo esquerdo, fixo e seguro */
+  background-image: radial-gradient(circle at 0% 0%, rgba(243, 206, 161, 0.05), transparent 40%);
+  background-attachment: fixed;
+}
