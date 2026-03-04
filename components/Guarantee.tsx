@@ -4,10 +4,14 @@ import { motion } from 'framer-motion'
 import { ShieldCheck, CheckCircle2 } from 'lucide-react'
 
 export default function Guarantee() {
+  const scrollToCTA = () => {
+    const element = document.getElementById('final-cta')
+    if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <section className="py-24 bg-adv-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-adv-dark rounded-3xl p-8 md:p-12 border border-white/10 shadow-xl max-w-4xl mx-auto text-center relative overflow-hidden">
+        <div className="bg-adv-dark rounded-3xl p-8 md:p-12 border border-white/10 shadow-xl shadow-[0_0_50px_rgba(255,184,77,0.06)] max-w-4xl mx-auto text-center relative overflow-hidden">
           
           {/* Badge Icon */}
           <motion.div 
@@ -30,7 +34,7 @@ export default function Guarantee() {
 
             <div className="prose prose-lg mx-auto text-gray-300 mb-8">
               <p>
-                Se em até 8 dias você não tiver fechado ao menos X novos contratos utilizando a organização e a IA da plataforma, devolvemos 100% do valor investido.
+                Se em até 8 dias você não tiver fechado ao menos 4 novos contratos utilizando a organização e a IA da plataforma, devolvemos 100% do valor investido.
               </p>
               <p className="font-medium text-white mt-4">
                 Sem perguntas. Sem burocracia. Sem letras miúdas.
@@ -53,6 +57,7 @@ export default function Guarantee() {
             </div>
 
             <motion.button
+              onClick={scrollToCTA}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-green-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-green-700 transition-all w-full sm:w-auto"

@@ -116,7 +116,10 @@ export default function FAQ() {
           className="mt-12 text-center"
         >
           <p className="text-gray-400 mb-6">Ainda tem dúvidas?</p>
-          <button className="px-8 py-3 bg-transparent border border-white/20 rounded-lg text-white font-medium hover:bg-white/5 transition-all shadow-sm">
+          <button 
+            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-3 bg-transparent border border-white/20 rounded-lg text-white font-medium hover:bg-white/5 transition-all shadow-sm"
+          >
             Falar com um especialista
           </button>
         </motion.div>

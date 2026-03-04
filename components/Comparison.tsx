@@ -112,6 +112,7 @@ export default function Comparison() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <motion.button
+            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-8 py-4 bg-adv-gold text-adv-black rounded-xl font-medium text-lg shadow-lg hover:shadow-xl hover:bg-yellow-400 transition-all"
@@ -120,6 +121,7 @@ export default function Comparison() {
           </motion.button>
           
           <motion.button
+            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-8 py-4 border border-white/20 text-white rounded-xl font-medium text-lg hover:bg-white/5 transition-all"

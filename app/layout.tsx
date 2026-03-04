@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-// import MouseFollowWrapper from '@/components/MouseFollowWrapper'
+import MouseTrail from '@/components/MouseTrail'
 
 export const metadata: Metadata = {
   title: 'AdvHub | CRM de IA para Advogados',
@@ -15,9 +15,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <body className="antialiased bg-[#050505] text-white">
-        {/* <MouseFollowWrapper> */}
-          {children}
-        {/* </MouseFollowWrapper> */}
+        <MouseTrail />
+        {children}
       </body>
     </html>
   )

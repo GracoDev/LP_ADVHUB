@@ -39,6 +39,10 @@ const flows = [
 ]
 
 export default function SmartFlows() {
+  const scrollToCTA = () => {
+    const element = document.getElementById('final-cta')
+    if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <section className="py-32 bg-adv-black relative overflow-hidden">
       {/* Ambient Glow */}
@@ -62,10 +66,11 @@ export default function SmartFlows() {
           {flows.map((flow) => (
             <motion.div
               key={flow.id}
+              onClick={scrollToCTA}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: flow.id * 0.1 }}
-              className="group relative flex items-center justify-between p-6 bg-adv-dark border border-white/5 rounded-2xl hover:border-white/10 hover:bg-white/5 transition-all cursor-pointer overflow-hidden"
+              className="group relative flex items-center justify-between p-6 bg-adv-dark border border-white/5 rounded-2xl hover:border-white/10 hover:bg-white/5 transition-all cursor-pointer overflow-hidden shadow-[0_0_25px_rgba(255,184,77,0.05)]"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               

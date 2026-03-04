@@ -1,4 +1,10 @@
+'use client'
+
 export default function Benefits() {
+  const scrollToCTA = () => {
+    const element = document.getElementById('final-cta')
+    if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
   const benefits = [
     { title: 'Funil Kanban', desc: 'Visualize todas as oportunidades.' },
     { title: 'Atendimento 24/7', desc: 'Nunca perca um lead.' },
@@ -36,7 +42,10 @@ export default function Benefits() {
         </div>
         
         <div className="mt-16">
-          <button className="text-white font-bold text-lg border-b-2 border-[#F3CEA1] hover:text-[#F3CEA1] transition-colors pb-1 inline-flex items-center gap-2 group">
+          <button 
+            onClick={scrollToCTA}
+            className="text-white font-bold text-lg border-b-2 border-adv-gold hover:text-adv-gold transition-colors pb-1 inline-flex items-center gap-2 group"
+          >
             Começar Agora
             <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </button>

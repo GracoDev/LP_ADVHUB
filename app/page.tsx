@@ -24,7 +24,7 @@ export default function Home() {
         <div id="como-funciona">
           <ChatDemo />
         </div>
-        
+
         <SetupDemo />
         
         {/* Dashboard Preview restaurado */}

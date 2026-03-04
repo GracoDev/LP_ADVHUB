@@ -43,9 +43,12 @@ export default function Hero() {
 
   const scrollToCTA = () => {
     const element = document.getElementById('final-cta');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToDemo = () => {
+    const element = document.getElementById('como-funciona');
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -56,7 +59,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
         <video
           ref={videoRef}
-          className={`min-w-full min-h-full object-cover blur-[1px] scale-[0.40] transition-opacity duration-1000 ${isVisible ? 'opacity-40' : 'opacity-0'}`}
+          className={`min-w-full min-h-full object-cover blur-0 scale-[0.50] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
           muted
           playsInline
           onTimeUpdate={handleTimeUpdate}
@@ -65,7 +68,7 @@ export default function Hero() {
           <source src="/assets/videos/background.mp4" type="video/mp4" />
         </video>
         {/* Overlay gradiente para garantir legibilidade */}
-        <div className="absolute inset-0 bg-adv-black/80 z-10" />
+        <div className="absolute inset-0 bg-adv-black/55 z-10" />
       </div>
 
       {/* Static Ambient Glows (Dispersos e Variados) */}
@@ -75,16 +78,6 @@ export default function Hero() {
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8"
-        >
-          <span className="w-2 h-2 rounded-full bg-[#F3CEA1] animate-pulse shadow-[0_0_10px_#F3CEA1]" />
-          <span className="text-sm text-slate-300 font-medium tracking-wide">IA Jurídica de Alta Performance</span>
-        </motion.div>
-
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,7 +85,7 @@ export default function Hero() {
           className="text-6xl md:text-8xl font-bold text-white tracking-tight leading-[1.1] mb-8"
         >
           Feche contratos<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F3CEA1] to-orange-600">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-adv-gold to-orange-600">
             enquanto dorme.
           </span>
         </motion.h1>
@@ -103,7 +96,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed"
         >
-          A única IA que qualifica leads, agenda reuniões e fecha contratos pelo WhatsApp enquanto você foca nos processos.
+          IA que qualifica leads, agenda reuniões e fecha contratos pelo WhatsApp.
         </motion.p>
 
         <motion.div 
@@ -114,20 +107,30 @@ export default function Hero() {
         >
           <button 
             onClick={scrollToCTA}
-            className="group relative px-10 py-5 bg-[#F3CEA1] text-black rounded-2xl font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(243,206,161,0.3)]"
+            className="group relative px-10 py-5 bg-adv-gold text-adv-black rounded-2xl font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,184,77,0.3)] shadow-[0_0_30px_rgba(255,184,77,0.15)]"
           >
             <span className="relative z-10">Começar Agora</span>
           </button>
           
           <button 
-            onClick={scrollToCTA}
-            className="px-10 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-3 group"
+            onClick={scrollToDemo}
+            className="px-10 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-3 group shadow-[0_0_25px_rgba(255,255,255,0.06)]"
           >
             <span>Ver Demonstração</span>
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform text-[#F3CEA1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform text-adv-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mt-8"
+        >
+          <span className="w-2 h-2 rounded-full bg-adv-gold animate-pulse shadow-[0_0_10px_rgba(255,184,77,0.5)]" />
+          <span className="text-sm text-slate-300 font-medium tracking-wide">IA Jurídica de Alta Performance</span>
         </motion.div>
 
       </div>

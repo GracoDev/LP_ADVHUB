@@ -170,7 +170,7 @@ export default function SetupDemo() {
               
               {/* NOTEBOOK */}
               <motion.div 
-                className="absolute inset-0 bg-[#1a1a1a] rounded-xl border border-white/10 shadow-2xl overflow-hidden flex flex-col"
+                className="absolute inset-0 bg-[#1a1a1a] rounded-xl border border-white/10 shadow-2xl shadow-[0_0_35px_rgba(255,184,77,0.08)] overflow-hidden flex flex-col"
                 initial={{ rotateX: 10 }}
                 animate={{ rotateX: 0 }}
                 transition={{ duration: 1 }}
@@ -186,7 +186,7 @@ export default function SetupDemo() {
                      <div className="flex justify-center mb-6">
                         <div className="w-10 h-10 rounded-full bg-adv-gold flex items-center justify-center font-bold text-black">AH</div>
                      </div>
-                     <div className="relative h-10 bg-white/5 rounded border border-white/10 w-full flex items-center px-3 text-gray-400 text-sm overflow-hidden">
+                     <div className="relative h-10 bg-white/5 rounded border border-white/10 w-full flex items-center px-3 text-gray-400 text-sm overflow-hidden shadow-[0_0_15px_rgba(255,184,77,0.05)]">
                         <span className={step >= 1 ? "text-white" : "text-gray-600"}>
                             {typedEmail || "E-mail"}
                         </span>
@@ -198,7 +198,7 @@ export default function SetupDemo() {
                             />
                         )}
                      </div>
-                     <div className="relative h-10 bg-white/5 rounded border border-white/10 w-full flex items-center px-3 text-gray-400 text-sm overflow-hidden">
+                     <div className="relative h-10 bg-white/5 rounded border border-white/10 w-full flex items-center px-3 text-gray-400 text-sm overflow-hidden shadow-[0_0_15px_rgba(255,184,77,0.05)]">
                         <span className={step >= 2 ? "text-white tracking-widest" : "text-gray-600"}>
                             {typedPassword || "Senha"}
                         </span>
@@ -359,11 +359,8 @@ export default function SetupDemo() {
               >
                 {/* Tela do Celular (Câmera) */}
                 <div className="flex-1 bg-gray-900 relative overflow-hidden">
-                   {/* Camera Feed Simulado */}
-                   <div className="absolute inset-0 bg-cover bg-center opacity-50" style={{ backgroundImage: "url('/assets/camera-bg.jpg')" }}>
-                      {/* Caso não tenha imagem, usar gradiente simulando ambiente */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-black opacity-80" />
-                   </div>
+                   {/* Camera Feed Simulado - gradiente simulando ambiente de escritório */}
+                   <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-900 to-black" />
                    
                    {/* Viewfinder */}
                    <div className="absolute inset-4 border-2 border-white/50 rounded-lg flex items-center justify-center z-10">

@@ -34,6 +34,9 @@ export default function Footer() {
           <Link href="#faq" className="hover:text-[#F3CEA1] transition-colors">
             FAQ
           </Link>
+          <Link href="#final-cta" className="hover:text-adv-gold transition-colors font-bold text-adv-gold">
+            Adquirir Agora
+          </Link>
         </div>
 
         {/* Instagram Highlight */}
@@ -42,7 +45,7 @@ export default function Footer() {
             href="https://www.instagram.com/advhub.ai/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[#0A0A0A] border border-white/10 rounded-2xl hover:border-[#F3CEA1]/50 hover:bg-[#0F0F0F] transition-all duration-300"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[#0A0A0A] border border-white/10 rounded-2xl hover:border-[#F3CEA1]/50 hover:bg-[#0F0F0F] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.04)]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-orange-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             

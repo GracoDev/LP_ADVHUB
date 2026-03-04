@@ -1,4 +1,10 @@
+'use client'
+
 export default function Solution() {
+  const scrollToCTA = () => {
+    const element = document.getElementById('final-cta')
+    if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
   const features = [
     { 
       title: 'Filtro Automático', 
@@ -32,7 +38,10 @@ export default function Solution() {
             </h2>
           </div>
           <div className="hidden md:block">
-            <button className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-xl font-bold transition-all">
+            <button 
+            onClick={scrollToCTA}
+            className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-xl font-bold transition-all"
+          >
               Ver todas as features →
             </button>
           </div>

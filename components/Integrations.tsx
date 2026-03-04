@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, FileSignature, Check, Clock, MessageSquare, Smartphone, CheckCircle2, FileText, Download, MousePointer2, MoreHorizontal, Send, User } from 'lucide-react'
+import Logo from './Logo'
 
 // Componente PhoneFrame unificado (Visual ChatDemo)
 const PhoneFrame = ({ children, className }: { children: React.ReactNode, className?: string }) => (
-  <div className={`bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden relative h-[550px] w-full max-w-[400px] flex flex-col mx-auto ${className}`}>
+  <div className={`bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl shadow-[0_0_40px_rgba(255,184,77,0.08)] overflow-hidden relative h-[550px] w-full max-w-[400px] flex flex-col mx-auto ${className}`}>
     {/* Status Bar Mock */}
     <div className="h-7 bg-adv-black/50 w-full flex justify-between items-center px-6 text-[10px] text-white/50 shrink-0">
       <span>19:12</span>
@@ -214,10 +215,7 @@ export default function Integrations() {
                         >
                           <div>
                             <p className="text-[10px] font-bold text-green-100 leading-tight">
-                              Reunião Confirmada
-                            </p>
-                            <p className="text-[9px] text-green-300 leading-tight">
-                              Via AdvHub AI
+                              Reunião confirmada via AdvHub com cliente Carlos
                             </p>
                           </div>
                           <motion.div 
@@ -255,12 +253,12 @@ export default function Integrations() {
                   <div className="bg-adv-card border-b border-white/5 p-4 flex items-center gap-3 z-10">
                     <div className="relative">
                       <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold text-xs">
-                        NL
+                        CS
                       </div>
                       <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-adv-card rounded-full" />
                     </div>
                     <div>
-                      <h3 className="text-white font-medium text-sm">Novo Lead</h3>
+                      <h3 className="text-white font-medium text-sm">Carlos Silva</h3>
                       <p className="text-adv-gold text-xs">Online agora</p>
                     </div>
                     <MoreHorizontal className="w-5 h-5 text-gray-500 ml-auto" />
@@ -292,6 +290,10 @@ export default function Integrations() {
                             <span className="text-[10px]">10:42</span>
                             <Check className="w-3 h-3" />
                           </div>
+                          <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-adv-gold/20">
+                            <Logo className="h-3 w-auto opacity-80" />
+                            <span className="text-[8px] text-adv-gold/70 uppercase tracking-wider">Enviado automaticamente</span>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -302,9 +304,9 @@ export default function Integrations() {
                     <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                       <span className="text-gray-400 text-lg">+</span>
                     </div>
-                    <div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600">
-                      Mensagem
-                    </div>
+<div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600 shadow-[0_0_12px_rgba(255,184,77,0.05)]">
+                          Mensagem
+                        </div>
                     <div className="w-9 h-9 rounded-full bg-adv-gold/20 flex items-center justify-center">
                       <Send className="w-4 h-4 text-adv-gold" />
                     </div>
@@ -320,12 +322,10 @@ export default function Integrations() {
         <div className="grid lg:grid-cols-2 gap-12 items-center mt-32">
           
           {/* Lado Esquerdo: Demo ZapSign (Updated) */}
-          <div className="order-1 flex items-center justify-center">
-             
-             {/* Phone Container for ZapSign */}
-             <div className="relative z-20">
+          <div className="order-1 relative w-full flex items-center justify-center min-h-[550px]">
+             <div className="relative z-20 w-full max-w-[400px] mx-auto flex justify-center">
                 {/* Single Phone Frame with Internal Transitions */}
-                <PhoneFrame className="h-[550px] w-[300px]">
+                <PhoneFrame className="h-[550px] w-[300px] shrink-0">
                   <div className="relative flex-1 overflow-hidden">
                     {/* 1. VIEW CHAT */}
                     <motion.div 
@@ -373,6 +373,10 @@ export default function Integrations() {
                                 <span className="text-[10px]">11:05</span>
                                 <Check className="w-3 h-3" />
                               </div>
+                              <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-adv-gold/20">
+                                <Logo className="h-3 w-auto opacity-80" />
+                                <span className="text-[8px] text-adv-gold/70 uppercase tracking-wider">Enviado automaticamente</span>
+                              </div>
 
                               {/* Finger/Click Hint */}
                               {zapStep === 2 && (
@@ -394,7 +398,7 @@ export default function Integrations() {
                         <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                           <span className="text-gray-400 text-lg">+</span>
                         </div>
-                        <div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600">
+                        <div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600 shadow-[0_0_12px_rgba(255,184,77,0.05)]">
                           Mensagem
                         </div>
                         <div className="w-9 h-9 rounded-full bg-adv-gold/20 flex items-center justify-center">
@@ -405,22 +409,22 @@ export default function Integrations() {
 
                     {/* 2. VIEW DOCUMENT */}
                     <motion.div 
-                      className="absolute inset-0 bg-white flex flex-col"
+                      className="absolute inset-0 bg-adv-dark flex flex-col"
                       initial={{ x: '100%' }}
                       animate={{ x: zapStep >= 3 ? '0%' : '100%' }}
                       transition={{ duration: 0.5, ease: "easeInOut" }}
                     >
                       {/* Doc Header */}
-                      <div className="bg-slate-100 p-3 border-b border-slate-200 flex items-center justify-between z-10 text-slate-800 shrink-0">
+                      <div className="bg-adv-card p-3 border-b border-white/10 flex items-center justify-between z-10 text-white shrink-0">
                         <div className="flex items-center gap-2">
                           <div className="w-4 h-4 bg-red-500 rounded" />
-                          <span className="text-[10px] font-bold text-slate-700">Contrato.pdf</span>
+                          <span className="text-[10px] font-bold text-white">Contrato.pdf</span>
                         </div>
-                        <div className="text-[8px] text-slate-400">1 de 3</div>
+                        <div className="text-[8px] text-gray-500">1 de 3</div>
                       </div>
 
                       {/* Doc Content */}
-                      <div className="flex-1 relative overflow-hidden bg-slate-50">
+                      <div className="flex-1 relative overflow-hidden bg-adv-black">
                         <motion.div 
                           className="absolute top-0 left-0 right-0 p-4 space-y-4"
                           animate={{ y: zapStep >= 4 ? -130 : 0 }} 
@@ -428,58 +432,58 @@ export default function Integrations() {
                         >
                           {/* Realistic Contract Text */}
                           <div className="space-y-3">
-                            <p className="text-[6px] text-slate-800 font-bold uppercase mb-2">Contrato de Prestação de Serviços Jurídicos</p>
+                            <p className="text-[6px] text-white font-bold uppercase mb-2">Contrato de Prestação de Serviços Jurídicos</p>
                             
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               Pelo presente instrumento particular, de um lado <strong>ADVHUB SOLUÇÕES JURÍDICAS</strong>, doravante denominado CONTRATADO, e de outro lado o cliente qualificado no cadastro, denominado CONTRATANTE, têm entre si justo e contratado o seguinte:
                             </p>
                             
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA PRIMEIRA - DO OBJETO</strong><br/>
                               O presente contrato tem como objeto a prestação de serviços de advocacia na área cível, especificamente para acompanhamento de processo judicial e consultoria preventiva.
                             </p>
 
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA SEGUNDA - DOS HONORÁRIOS</strong><br/>
                               Pelos serviços prestados, o CONTRATANTE pagará ao CONTRATADO o valor estipulado na proposta comercial anexa, sendo 30% no ato da assinatura e o restante ao final do processo (êxito).
                             </p>
 
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA TERCEIRA - DAS OBRIGAÇÕES</strong><br/>
                               O CONTRATADO compromete-se a agir com zelo e dedicação, utilizando todos os meios jurídicos cabíveis para a defesa dos interesses do CONTRATANTE.
                             </p>
 
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA QUARTA - DA RESCISÃO</strong><br/>
                               O contrato poderá ser rescindido por qualquer das partes, mediante aviso prévio de 30 dias, sem prejuízo dos honorários proporcionais aos serviços já realizados.
                             </p>
                             
-                            <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                            <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA QUINTA - DO FORO</strong><br/>
                               Fica eleito o foro da Comarca de São Paulo/SP para dirimir quaisquer dúvidas oriundas deste contrato.
                             </p>
-                             <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                             <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA SEXTA - DA CONFIDENCIALIDADE</strong><br/>
                                As partes comprometem-se a manter sigilo absoluto sobre todas as informações trocadas durante a vigência deste contrato, sob pena de responsabilização civil e criminal.
                             </p>
-                             <p className="text-[5px] text-slate-500 leading-relaxed text-justify">
+                             <p className="text-[5px] text-gray-400 leading-relaxed text-justify">
                               <strong>CLÁUSULA SÉTIMA - DA VIGÊNCIA</strong><br/>
                                O presente contrato entra em vigor na data de sua assinatura eletrônica e terá validade até a conclusão definitiva do processo ou serviço contratado.
                             </p>
                           </div>
 
                           {/* ZapSign Signature Area */}
-                          <div className="pt-8 mt-8 border-t border-slate-300">
-                            <p className="text-[8px] font-bold text-slate-700 mb-4">ASSINATURA DO CONTRATANTE</p>
+                          <div className="pt-8 mt-8 border-t border-white/10">
+                            <p className="text-[8px] font-bold text-white mb-4">ASSINATURA DO CONTRATANTE</p>
                             
-                            <div className="relative bg-slate-100 border border-slate-300 rounded-md p-4 flex flex-col items-center justify-center gap-2 min-h-[100px]">
+                            <div className="relative bg-adv-card border border-white/10 rounded-md p-4 flex flex-col items-center justify-center gap-2 min-h-[100px]">
                               {zapStep < 6 && (
                                 <>
                                   <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mb-1">
                                     <FileSignature className="w-4 h-4 text-white" />
                                   </div>
-                                  <p className="text-[8px] text-slate-500 font-medium">Clique para assinar digitalmente</p>
-                                  <p className="text-[6px] text-slate-400">IP: 192.168.1.1 • Data: 03/03/2026</p>
+                                  <p className="text-[8px] text-gray-400 font-medium">Clique para assinar digitalmente</p>
+                                  <p className="text-[6px] text-gray-500">IP: 192.168.1.1 • Data: 03/03/2026</p>
                                 </>
                               )}
 
@@ -489,7 +493,7 @@ export default function Integrations() {
                                     <motion.path
                                       d="M 20 60 C 20 60 40 20 50 40 C 60 70 30 80 40 60 C 50 40 90 30 110 50 C 130 70 120 90 140 80 C 160 70 180 50 190 60"
                                       fill="transparent"
-                                      stroke="#000000"
+                                      stroke="#ffffff"
                                       strokeWidth="2"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
@@ -506,9 +510,9 @@ export default function Integrations() {
                                   <motion.div 
                                     initial={{ scale: 2, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    className="absolute inset-0 bg-green-50/90 flex items-center justify-center"
+                                    className="absolute inset-0 bg-green-950/90 flex items-center justify-center"
                                   >
-                                    <div className="border-2 border-green-600 text-green-700 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                                    <div className="border-2 border-green-500 text-green-400 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
                                       <Check className="w-3 h-3" />
                                       Assinado
                                     </div>
@@ -518,8 +522,8 @@ export default function Integrations() {
                             </div>
                             
                             <div className="mt-4 flex justify-between items-center">
-                                <div className="h-1 w-16 bg-slate-300 rounded"/>
-                                 <div className="h-4 w-4 bg-slate-300 rounded-full"/>
+                                <div className="h-1 w-16 bg-white/20 rounded"/>
+                                 <div className="h-4 w-4 bg-white/20 rounded-full"/>
                             </div>
                           </div>
                           

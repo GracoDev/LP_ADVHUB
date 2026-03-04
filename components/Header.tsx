@@ -46,7 +46,7 @@ export default function Header() {
           </Link>
           <button 
             onClick={scrollToCTA}
-            className="px-6 py-2.5 bg-[#F3CEA1] text-black rounded-lg font-bold text-sm hover:bg-[#E5BE90] transition-all hover:shadow-[0_0_15px_rgba(243,206,161,0.3)] transform hover:-translate-y-0.5"
+            className="px-6 py-2.5 bg-adv-gold text-adv-black rounded-lg font-bold text-sm hover:bg-yellow-400 transition-all hover:shadow-[0_0_15px_rgba(255,184,77,0.3)] transform hover:-translate-y-0.5"
           >
             Adquirir
           </button>

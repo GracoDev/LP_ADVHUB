@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Send, MoreHorizontal, ShieldCheck } from 'lucide-react'
+import Logo from './Logo'
 import { useState, useEffect, useRef } from 'react'
 
 const fullConversation = [
@@ -118,7 +119,7 @@ export default function ChatDemo() {
       <div className="absolute top-0 right-0 w-1/3 h-full bg-adv-gold/5 blur-[100px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-end">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Left Column: Text & Explanation */}
           <div className="order-2 lg:order-1 pb-8">
@@ -147,7 +148,7 @@ export default function ChatDemo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-adv-dark/50 border border-white/10 rounded-2xl p-6 mb-8"
+              className="bg-adv-dark/50 border border-white/10 rounded-2xl p-6 mb-8 shadow-[0_0_30px_rgba(255,184,77,0.08)]"
             >
               <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-adv-gold" />
@@ -175,16 +176,16 @@ export default function ChatDemo() {
                 onClick={scrollToCTA}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-adv-gold text-adv-black rounded-xl font-medium text-lg shadow-lg hover:bg-yellow-400 transition-all text-center"
+                className="px-8 py-4 bg-adv-gold text-adv-black rounded-xl font-medium text-lg shadow-lg shadow-[0_0_25px_rgba(255,184,77,0.15)] hover:bg-yellow-400 transition-all text-center"
               >
-                👉 Quero que a IA trabalhe para mim
+                Quero que a IA trabalhe para mim
               </motion.button>
               
               <motion.button
                 onClick={scrollToCTA}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 border border-white/20 text-white rounded-xl font-medium text-lg hover:bg-white/5 transition-all text-center"
+                className="px-8 py-4 border border-white/20 text-white rounded-xl font-medium text-lg hover:bg-white/5 transition-all text-center shadow-[0_0_20px_rgba(255,255,255,0.05)]"
               >
                 Ver como funciona na prática
               </motion.button>
@@ -198,10 +199,10 @@ export default function ChatDemo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative mx-auto max-w-[400px]"
+              className="relative mx-auto max-w-[320px]"
             >
               {/* Phone Frame */}
-              <div className="bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl overflow-hidden relative h-[550px] flex flex-col">
+              <div className="bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl shadow-[0_0_40px_rgba(255,184,77,0.08)] overflow-hidden relative h-[550px] flex flex-col">
                 
                 {/* Status Bar Mock */}
                 <div className="h-7 bg-adv-black/50 w-full flex justify-between items-center px-6 text-[10px] text-white/50">
@@ -240,19 +241,25 @@ export default function ChatDemo() {
                         key={index}
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        className={`flex ${msg.role === 'client' ? 'justify-end' : 'justify-start'}`}
+                        className={`flex ${msg.role === 'client' ? 'justify-start' : 'justify-end'}`}
                       >
                         <div 
                           className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed relative group ${
                             msg.role === 'client' 
-                              ? 'bg-adv-card text-gray-200 rounded-tr-none border border-white/5' 
-                              : 'bg-adv-gold/10 text-adv-gold/90 rounded-tl-none border border-adv-gold/20'
+                              ? 'bg-adv-card text-gray-200 rounded-tl-none border border-white/5' 
+                              : 'bg-adv-gold/10 text-adv-gold/90 rounded-tr-none border border-adv-gold/20'
                           }`}
                         >
                           <p className="whitespace-pre-line">{msg.text}</p>
-                          <span className={`text-[10px] mt-1 block opacity-50 ${msg.role === 'client' ? 'text-right' : 'text-left'}`}>
+                          <span className={`text-[10px] mt-1 block opacity-50 ${msg.role === 'client' ? 'text-left' : 'text-right'}`}>
                             {msg.time}
                           </span>
+                          {msg.role === 'ai' && (
+                            <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-adv-gold/20">
+                              <Logo className="h-3 w-auto opacity-80" />
+                              <span className="text-[8px] text-adv-gold/70 uppercase tracking-wider">Enviado automaticamente</span>
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     ))}
@@ -264,9 +271,9 @@ export default function ChatDemo() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      className="flex items-center gap-2 mt-4 ml-1"
+                      className="flex items-center justify-end gap-2 mt-4"
                     >
-                      <div className="flex gap-1 p-2 bg-adv-card rounded-xl rounded-tl-none border border-white/5">
+                      <div className="flex gap-1 p-2 bg-adv-gold/10 rounded-xl rounded-tr-none border border-adv-gold/20">
                         <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
                         <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
                         <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" />
@@ -284,7 +291,7 @@ export default function ChatDemo() {
                   <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
                     <span className="text-gray-400 text-lg">+</span>
                   </div>
-                  <div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600">
+                  <div className="flex-1 bg-adv-black rounded-full h-9 border border-white/5 px-4 flex items-center text-xs text-gray-600 shadow-[0_0_15px_rgba(255,184,77,0.06)]">
                     Mensagem
                   </div>
                   <div className="w-9 h-9 rounded-full bg-adv-gold/20 flex items-center justify-center">
