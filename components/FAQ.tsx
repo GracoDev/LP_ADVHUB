@@ -44,6 +44,10 @@ export default function FAQ() {
 
   return (
     <section className="py-24 bg-adv-black relative overflow-hidden" id="faq">
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FFB84D]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-15%] right-[5%] w-[400px] h-[400px] bg-[#F3CEA1]/8 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[10%] w-[350px] h-[350px] bg-[#FFB84D]/6 rounded-full blur-[90px] pointer-events-none" />
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.h2 

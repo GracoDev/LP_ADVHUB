@@ -5,8 +5,10 @@ import { Instagram } from 'lucide-react'
 export default function Footer() {
   return (
     <footer className="bg-[#050505] border-t border-white/5 pt-20 pb-16 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#F3CEA1]/5 rounded-full blur-[100px] pointer-events-none" />
+      {/* Orbes radiais douradas */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#FFB84D]/12 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[5%] w-[400px] h-[250px] bg-[#F3CEA1]/8 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[5%] w-[400px] h-[250px] bg-[#FFB84D]/8 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-[1000px] mx-auto px-6 text-center relative z-10">
         

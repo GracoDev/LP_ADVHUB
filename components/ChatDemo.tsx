@@ -114,15 +114,16 @@ export default function ChatDemo() {
   }, [messages, isTyping])
 
   return (
-    <section className="py-24 bg-adv-black relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-adv-gold/5 blur-[100px] pointer-events-none" />
+    <section className="py-24 bg-adv-black relative overflow-hidden min-h-0">
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-0 right-0 w-[500px] h-[600px] bg-[#FFB84D]/12 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Left Column: Text & Explanation */}
-          <div className="order-2 lg:order-1 pb-8">
+          <div className="order-2 lg:order-1">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +131,7 @@ export default function ChatDemo() {
               className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight"
             >
               Enquanto você dorme, <br/>
-              <span className="text-adv-gold">novos casos estão sendo fechados.</span>
+              <span className="text-adv-gold">novos casos são fechados.</span>
             </motion.h2>
             
             <motion.p 
@@ -140,7 +141,7 @@ export default function ChatDemo() {
               transition={{ delay: 0.1 }}
               className="text-lg text-gray-400 mb-8"
             >
-              Veja como a IA atende, qualifica e encaminha o cliente pronta para contratação.
+              A IA atende, qualifica e encaminha o cliente pronto para contratação.
             </motion.p>
 
             <motion.div 
@@ -202,7 +203,7 @@ export default function ChatDemo() {
               className="relative mx-auto max-w-[320px]"
             >
               {/* Phone Frame */}
-              <div className="bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl shadow-[0_0_40px_rgba(255,184,77,0.08)] overflow-hidden relative h-[550px] flex flex-col">
+              <div className="bg-adv-dark border border-white/10 rounded-[2.5rem] shadow-2xl shadow-[0_0_40px_rgba(255,184,77,0.08)] overflow-hidden relative h-[520px] flex flex-col">
                 
                 {/* Status Bar Mock */}
                 <div className="h-7 bg-adv-black/50 w-full flex justify-between items-center px-6 text-[10px] text-white/50">
@@ -228,10 +229,10 @@ export default function ChatDemo() {
                   <MoreHorizontal className="w-5 h-5 text-gray-500 ml-auto" />
                 </div>
 
-                {/* Chat Area */}
+                {/* Chat Area - scroll automático apenas, sem rolagem manual */}
                 <div 
                   ref={chatContainerRef}
-                  className="flex-1 overflow-y-auto p-4 space-y-4 bg-adv-black scrollbar-hide scroll-smooth"
+                  className="flex-1 overflow-y-auto p-4 space-y-4 bg-adv-black scrollbar-hide scroll-smooth overscroll-none pointer-events-none select-none"
                 >
                   <div className="text-center text-xs text-gray-500 my-4">Hoje</div>
                   

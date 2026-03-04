@@ -16,13 +16,11 @@ export default function SetupDemo() {
   // 0: Tela de Login (Início)
   // 1: Digitando Email
   // 2: Digitando Senha
-  // 3: Loading (Spinner)
-  // 4: QR Code aparece na tela + Linhas de velocidade (Agilidade)
-  // 5: Celular sobe para escanear
-  // 6: Escaneando (Barra descendo)
-  // 7: Conectado (Sucesso)
-  // 8: Dashboard (Prévia do Kanban/Gráficos)
-  // 9: Reset e Reinicia
+  // 3: QR Code aparece na tela (transição direta, sem loading)
+  // 4: Celular sobe para escanear
+  // 5: Escaneando (Barra descendo)
+  // 6: Conectado (Sucesso)
+  // 7: Dashboard (Prévia com métricas animadas)
 
   useEffect(() => {
     const sequence = async () => {
@@ -36,7 +34,7 @@ export default function SetupDemo() {
         setStep(1)
         for (let i = 0; i <= fullEmail.length; i++) {
             setTypedEmail(fullEmail.slice(0, i))
-            await new Promise(r => setTimeout(r, 50)) // Velocidade de digitação
+            await new Promise(r => setTimeout(r, 50))
         }
         await new Promise(r => setTimeout(r, 300))
 
@@ -46,24 +44,22 @@ export default function SetupDemo() {
             setTypedPassword(fullPassword.slice(0, i))
             await new Promise(r => setTimeout(r, 50))
         }
-        await new Promise(r => setTimeout(r, 500))
+        await new Promise(r => setTimeout(r, 400))
         
-        setStep(3) // Loading
+        // Transição direta para QR Code (sem loading)
+        setStep(3) // QR Code + Speed Lines
         await new Promise(r => setTimeout(r, 1000))
         
-        setStep(4) // QR Code + Speed Lines
+        setStep(4) // Celular sobe
         await new Promise(r => setTimeout(r, 1000))
         
-        setStep(5) // Celular sobe
-        await new Promise(r => setTimeout(r, 1000))
-        
-        setStep(6) // Escaneando
+        setStep(5) // Escaneando
         await new Promise(r => setTimeout(r, 2000))
         
-        setStep(7) // Sucesso (Conectado)
+        setStep(6) // Sucesso (Conectado)
         await new Promise(r => setTimeout(r, 1500))
 
-        setStep(8) // Dashboard
+        setStep(7) // Dashboard
         await new Promise(r => setTimeout(r, 6000))
       }
     }
@@ -71,7 +67,11 @@ export default function SetupDemo() {
   }, [])
 
   return (
-    <section className="py-24 bg-adv-black relative overflow-hidden border-t border-white/5">
+    <section className="py-24 pb-32 bg-adv-black relative overflow-hidden border-t border-white/5">
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-[-15%] -translate-y-1/2 w-[550px] h-[550px] bg-[#FFB84D]/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-[#F3CEA1]/12 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -118,7 +118,7 @@ export default function SetupDemo() {
             
             {/* Speed Lines Animation - Indica rapidez */}
             <AnimatePresence>
-                {step >= 3 && (
+                {step >= 3 && step < 7 && (
                     <motion.div 
                         className="absolute inset-0 z-0 pointer-events-none"
                         initial={{ opacity: 0 }}
@@ -182,6 +182,7 @@ export default function SetupDemo() {
                   <motion.div 
                     className="w-full max-w-[280px] space-y-4"
                     animate={{ opacity: step < 3 ? 1 : 0, pointerEvents: step < 3 ? 'auto' : 'none' }}
+                    transition={{ duration: 0.2 }}
                   >
                      <div className="flex justify-center mb-6">
                         <div className="w-10 h-10 rounded-full bg-adv-gold flex items-center justify-center font-bold text-black">AH</div>
@@ -215,28 +216,21 @@ export default function SetupDemo() {
                      </div>
                   </motion.div>
 
-                  {/* Cenário 2: Loading */}
-                  <motion.div 
-                    className="absolute inset-0 flex items-center justify-center bg-[#0f0f0f]"
-                    animate={{ opacity: step === 3 ? 1 : 0 }}
-                  >
-                    <div className="w-8 h-8 border-2 border-adv-gold border-t-transparent rounded-full animate-spin" />
-                  </motion.div>
-
-                  {/* Cenário 3: QR Code (Dashboard) */}
+                  {/* Cenário 2: QR Code */}
                   <motion.div 
                     className="absolute inset-0 bg-[#0f0f0f] flex flex-col items-center justify-center"
-                    animate={{ opacity: step >= 4 ? 1 : 0 }}
+                    animate={{ opacity: step >= 3 ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
                   >
                     <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                         Escaneie para conectar
-                        {step >= 4 && step < 7 && <Zap className="w-4 h-4 text-adv-gold animate-pulse" />}
+                        {step >= 3 && step < 6 && <Zap className="w-4 h-4 text-adv-gold animate-pulse" />}
                     </h3>
                     <div className="p-4 bg-white rounded-xl relative overflow-hidden">
                       <QrCode className="w-32 h-32 text-black" />
                       
                       {/* Scanner Line (Visual Feedback no PC também) */}
-                      {step >= 6 && step < 7 && (
+                      {step >= 5 && step < 6 && (
                         <motion.div 
                           className="absolute top-0 left-0 w-full h-1 bg-green-500 shadow-[0_0_10px_#22c55e]"
                           animate={{ top: ['0%', '100%'] }}
@@ -248,7 +242,7 @@ export default function SetupDemo() {
                       <motion.div 
                         className="absolute inset-0 bg-white/90 flex items-center justify-center"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: step >= 7 ? 1 : 0 }}
+                        animate={{ opacity: step >= 6 ? 1 : 0 }}
                       >
                         <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
                           <Check className="w-6 h-6 text-white" />
@@ -258,75 +252,99 @@ export default function SetupDemo() {
                     <p className="text-gray-500 text-xs mt-4">Abra o WhatsApp {'>'} Menu {'>'} Aparelhos conectados</p>
                   </motion.div>
 
-                  {/* Cenário 4: Dashboard Preview (Pós-conexão) */}
+                  {/* Cenário 3: Dashboard (estilo DashboardPreview, métricas animadas) */}
                   <motion.div 
-                    className="absolute inset-0 bg-[#0f0f0f] flex flex-col p-4 overflow-hidden"
+                    className="absolute inset-0 bg-[#0f0f0f] flex flex-col p-3 overflow-hidden"
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: step === 8 ? 1 : 0 }}
-                    transition={{ duration: 0.5 }}
+                    animate={{ opacity: step === 7 ? 1 : 0 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    {/* Header Mini Dashboard */}
-                    <div className="w-full h-8 border-b border-white/10 flex items-center justify-between mb-4">
-                        <div className="text-[10px] text-gray-400 font-bold">DASHBOARD</div>
-                        <div className="flex gap-2">
-                             <div className="w-2 h-2 rounded-full bg-red-500"/>
-                             <div className="w-2 h-2 rounded-full bg-yellow-500"/>
-                             <div className="w-2 h-2 rounded-full bg-green-500"/>
+                    {/* Header */}
+                    <div className="w-full h-6 border-b border-white/10 flex items-center justify-between mb-2 shrink-0">
+                        <div className="text-[9px] text-gray-400 font-bold">DASHBOARD</div>
+                        <div className="flex gap-1">
+                             <div className="w-1.5 h-1.5 rounded-full bg-red-500"/>
+                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"/>
+                             <div className="w-1.5 h-1.5 rounded-full bg-green-500"/>
                         </div>
                     </div>
                     
-                    {/* Charts Grid */}
-                    <div className="w-full grid grid-cols-2 gap-2 mb-2">
-                        <div className="bg-white/5 rounded p-2 h-20 relative overflow-hidden">
-                             <div className="text-[8px] text-gray-500 mb-1">Novos Leads</div>
-                             <div className="text-lg font-bold text-white">124</div>
-                             <div className="absolute bottom-0 left-0 w-full h-8 opacity-30">
-                                <svg viewBox="0 0 100 20" className="w-full h-full">
-                                    <path d="M0,20 Q20,5 40,15 T100,0 V20 H0 Z" fill="#F3CEA1" />
-                                </svg>
-                             </div>
-                        </div>
-                        <div className="bg-white/5 rounded p-2 h-20 relative overflow-hidden">
-                             <div className="text-[8px] text-gray-500 mb-1">Conversão</div>
-                             <div className="text-lg font-bold text-green-400">32%</div>
-                             <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700">
+                    {/* Cards de métricas (como DashboardPreview) */}
+                    <div className="grid grid-cols-4 gap-1.5 mb-2 shrink-0">
+                        {[
+                            { label: 'Chats', value: 53, color: 'text-white', pulse: false },
+                            { label: 'Conversão', value: '35.9%', color: 'text-green-400', pulse: false },
+                            { label: 'Reuniões', value: 18, color: 'text-white', pulse: false },
+                            { label: '24/7', value: '0.0%', color: 'text-adv-gold', pulse: true },
+                        ].map((m, i) => (
+                            <motion.div 
+                                key={i}
+                                className="bg-white/5 rounded-lg p-1.5 border border-white/5"
+                                initial={{ opacity: 0, y: 4 }}
+                                animate={step === 7 ? { opacity: 1, y: 0 } : {}}
+                                transition={{ delay: 0.1 * i }}
+                            >
+                                <div className="text-[7px] text-gray-500 truncate">{m.label}</div>
                                 <motion.div 
-                                    className="h-full bg-green-500" 
-                                    initial={{ width: 0 }}
-                                    animate={{ width: step === 8 ? '32%' : 0 }}
-                                    transition={{ duration: 1, delay: 0.5 }}
-                                />
-                             </div>
-                        </div>
+                                    className={`text-sm font-bold ${m.color} ${m.pulse ? 'animate-pulse' : ''}`}
+                                    initial={{ opacity: 0 }}
+                                    animate={step === 7 ? { opacity: 1 } : {}}
+                                    transition={{ delay: 0.2 + i * 0.05 }}
+                                >
+                                    {m.value}
+                                </motion.div>
+                            </motion.div>
+                        ))}
                     </div>
 
-                    {/* Mini Kanban */}
-                    <div className="w-full flex gap-1 h-full overflow-hidden opacity-50">
-                        <div className="flex-1 bg-white/5 rounded-t p-1 space-y-1">
-                             <div className="w-full h-1 bg-gray-700 rounded mb-1"/>
-                             <div className="w-full h-6 bg-white/10 rounded"/>
-                             <div className="w-full h-6 bg-white/10 rounded"/>
+                    {/* Gráfico mini + barras de status */}
+                    <div className="flex gap-2 flex-1 min-h-0">
+                        <div className="flex-1 bg-white/5 rounded-lg p-2 border border-white/5 min-w-0">
+                            <div className="text-[7px] text-gray-500 mb-1">Evolução 7d</div>
+                            <div className="h-12 w-full relative">
+                                <svg viewBox="0 0 100 40" className="w-full h-full" preserveAspectRatio="none">
+                                    <motion.path 
+                                        d="M0,30 Q20,25 40,20 T80,15 T100,10" 
+                                        fill="none" stroke="#FFB84D" strokeWidth="1.5" strokeLinecap="round"
+                                        initial={{ pathLength: 0 }}
+                                        animate={step === 7 ? { pathLength: 1 } : {}}
+                                        transition={{ duration: 1.2, delay: 0.5 }}
+                                    />
+                                </svg>
+                            </div>
                         </div>
-                        <div className="flex-1 bg-white/5 rounded-t p-1 space-y-1">
-                             <div className="w-full h-1 bg-adv-gold/50 rounded mb-1"/>
-                             <div className="w-full h-6 bg-white/10 rounded"/>
-                        </div>
-                        <div className="flex-1 bg-white/5 rounded-t p-1 space-y-1">
-                             <div className="w-full h-1 bg-green-500/50 rounded mb-1"/>
-                             <div className="w-full h-6 bg-white/10 rounded"/>
-                             <div className="w-full h-6 bg-white/10 rounded"/>
+                        <div className="w-20 bg-white/5 rounded-lg p-1.5 border border-white/5 shrink-0 space-y-1">
+                            {[
+                                { label: 'Qualif.', val: '18.9%', color: 'bg-blue-500' },
+                                { label: 'Contrato', val: '13.2%', color: 'bg-adv-gold' },
+                                { label: 'Desqual.', val: '11.3%', color: 'bg-purple-500' },
+                            ].map((b, i) => (
+                                <div key={i}>
+                                    <div className="flex justify-between text-[6px] text-gray-500">
+                                        <span className="truncate">{b.label}</span>
+                                        <span>{b.val}</span>
+                                    </div>
+                                    <div className="h-0.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <motion.div 
+                                            className={`h-full rounded-full ${b.color}`}
+                                            initial={{ width: 0 }}
+                                            animate={step === 7 ? { width: b.val } : {}}
+                                            transition={{ duration: 0.8, delay: 0.6 + i * 0.1 }}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
                     <motion.div 
                         initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: step === 8 ? 1 : 0.8, opacity: step === 8 ? 1 : 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-lg whitespace-nowrap"
+                        animate={{ scale: step === 7 ? 1 : 0.8, opacity: step === 7 ? 1 : 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold shadow-lg whitespace-nowrap"
                     >
                         Sincronização Concluída
                     </motion.div>
-
                   </motion.div>
 
                 </div>
@@ -351,8 +369,8 @@ export default function SetupDemo() {
                 className="absolute bottom-[-100px] right-[-20px] w-[140px] h-[280px] bg-black border-4 border-gray-800 rounded-[2rem] shadow-2xl overflow-hidden z-20 flex flex-col"
                 initial={{ y: 200, opacity: 0 }}
                 animate={{ 
-                  y: step >= 5 && step < 8 ? -50 : 200, 
-                  opacity: step >= 5 && step < 8 ? 1 : 0,
+                  y: step >= 4 && step < 7 ? -50 : 200, 
+                  opacity: step >= 4 && step < 7 ? 1 : 0,
                   rotate: -10 
                 }}
                 transition={{ type: "spring", stiffness: 100, damping: 20 }}
@@ -368,7 +386,7 @@ export default function SetupDemo() {
                       <div className="h-full w-[1px] bg-white/20 absolute" />
                       
                       {/* Scanning Line */}
-                      {step === 6 && (
+                      {step === 5 && (
                         <motion.div 
                           className="absolute w-full h-[2px] bg-green-500 shadow-[0_0_10px_#22c55e]"
                           animate={{ top: ['0%', '100%'] }}
@@ -388,7 +406,7 @@ export default function SetupDemo() {
                    <motion.div 
                       className="absolute inset-0 bg-green-600 flex flex-col items-center justify-center text-white z-30"
                       initial={{ opacity: 0 }}
-                      animate={{ opacity: step >= 7 ? 1 : 0 }}
+                      animate={{ opacity: step >= 6 ? 1 : 0 }}
                    >
                       <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2">
                         <Check className="w-6 h-6 text-green-600" />

@@ -10,6 +10,10 @@ export default function Guarantee() {
   }
   return (
     <section className="py-24 bg-adv-black relative overflow-hidden">
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FFB84D]/10 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-[-10%] left-[10%] w-[400px] h-[400px] bg-[#F3CEA1]/8 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-15%] right-[15%] w-[450px] h-[450px] bg-[#FFB84D]/8 rounded-full blur-[110px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-adv-dark rounded-3xl p-8 md:p-12 border border-white/10 shadow-xl shadow-[0_0_50px_rgba(255,184,77,0.06)] max-w-4xl mx-auto text-center relative overflow-hidden">
           
@@ -62,7 +66,7 @@ export default function Guarantee() {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-green-600 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:bg-green-700 transition-all w-full sm:w-auto"
             >
-              👉 Quero testar sem risco
+              Quero testar sem risco
             </motion.button>
           </div>
           

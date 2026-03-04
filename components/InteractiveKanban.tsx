@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { DragDropContext, Droppable, Draggable, DropResult, DraggableStyle } from '@hello-pangea/dnd'
-import { GripVertical } from 'lucide-react'
+import { GripVertical, MousePointer2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo'
 
@@ -67,6 +67,27 @@ const newLeads = [
   { name: 'Juliana Paes', type: 'Cível' },
   { name: 'Marcos Vinicius', type: 'Trabalhista' }
 ]
+
+// Badge que alterna Clicando... → Arrastando... na animação da IA
+function FlyingBadge({ isFast }: { isFast?: boolean }) {
+  const [phase, setPhase] = useState<'click' | 'drag'>('click')
+  useEffect(() => {
+    if (isFast) return
+    const t = setTimeout(() => setPhase('drag'), 650)
+    return () => clearTimeout(t)
+  }, [isFast])
+  return (
+    <motion.span
+      key={phase}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2 }}
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-adv-gold/90 text-black text-[11px] font-bold shadow-lg shadow-adv-gold/40"
+    >
+      {isFast ? 'Arrastando...' : phase === 'click' ? 'Clicando...' : 'Arrastando...'}
+    </motion.span>
+  )
+}
 
 const getStyle = (style: DraggableStyle | undefined, snapshot: any) => {
   if (!snapshot.isDragging) return style;
@@ -306,7 +327,10 @@ export default function InteractiveKanban() {
 
   return (
     <section className="py-32 bg-transparent border-t border-white/5 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-adv-gold/5 rounded-full blur-[100px] pointer-events-none z-0" />
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FFB84D]/12 rounded-full blur-[130px] pointer-events-none z-0" />
+      <div className="absolute top-0 right-[-10%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none z-0" />
+      <div className="absolute bottom-[-15%] left-[-5%] w-[500px] h-[400px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none z-0" />
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
@@ -338,21 +362,62 @@ export default function InteractiveKanban() {
                 opacity: 1,
                 scale: 1
               }}
-              transition={{ duration: flyingCard.fast ? 0.25 : 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{
+                x: {
+                  delay: flyingCard.fast ? 0.1 : 0.9,
+                  duration: flyingCard.fast ? 0.2 : 1.3,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                },
+                y: {
+                  delay: flyingCard.fast ? 0.1 : 0.9,
+                  duration: flyingCard.fast ? 0.2 : 1.3,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                },
+                scale: flyingCard.fast ? { duration: 0 } : { duration: 0.5 }
+              }}
               onAnimationComplete={finishFlyingAnimation}
               style={{ width: 250 }}
             >
-              <div className="border-2 border-adv-gold bg-adv-gold/20 shadow-2xl shadow-adv-gold/40 rounded-xl p-4 backdrop-blur-sm">
-                <div className="flex justify-between items-start mb-3">
-                  <span className="text-white font-medium text-sm truncate">{flyingCard.card.name}</span>
-                  <Logo className="h-3 w-auto opacity-80" />
+              <div className="relative">
+                {/* Seta/Cursor - indica clique e arraste */}
+                {(() => {
+                  const toIdx = COLUMN_ORDER.indexOf(flyingCard.toCol as typeof COLUMN_ORDER[number])
+                  const fromIdx = COLUMN_ORDER.indexOf(flyingCard.fromCol as typeof COLUMN_ORDER[number])
+                  const movingRight = toIdx > fromIdx
+                  return (
+                    <motion.div
+                      className={`absolute -top-1 -right-2 z-10 text-adv-gold drop-shadow-[0_2px_8px_rgba(255,184,77,0.6)] ${!movingRight ? 'rotate-180 left-auto right-auto -left-2' : ''}`}
+                      animate={flyingCard.fast ? {} : {
+                        scale: [1, 0.9, 1.1, 1],
+                        transition: { duration: 0.6, times: [0, 0.3, 0.5, 0.6] }
+                      }}
+                    >
+                      <MousePointer2 className="w-8 h-8" strokeWidth={2.5} />
+                    </motion.div>
+                  )
+                })()}
+                {/* Badge - Clicando → Arrastando */}
+                <div className="absolute -top-8 right-0 z-10">
+                  <FlyingBadge isFast={flyingCard.fast} />
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] px-2 py-1 rounded bg-white/10 text-slate-300">{flyingCard.card.type}</span>
-                  <span className="text-[9px] flex items-center gap-1 font-bold text-black bg-adv-gold px-2 py-0.5 rounded">
-                    Classificado pela IA
-                  </span>
-                </div>
+                <motion.div
+                  className="border-2 border-adv-gold bg-adv-gold/20 shadow-2xl shadow-adv-gold/40 rounded-xl p-4 backdrop-blur-sm"
+                  animate={flyingCard.fast ? {} : {
+                    scale: [1, 0.98, 1],
+                    transition: { duration: 0.6 }
+                  }}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-white font-medium text-sm truncate">{flyingCard.card.name}</span>
+                    <Logo className="h-3 w-auto opacity-80" />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] px-2 py-1 rounded bg-white/10 text-slate-300">{flyingCard.card.type}</span>
+                    <span className="text-[9px] flex items-center gap-1 font-bold text-black bg-adv-gold px-2 py-0.5 rounded">
+                      Classificado pela IA
+                    </span>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           )}

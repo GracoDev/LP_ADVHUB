@@ -5,8 +5,8 @@ import DashboardPreview from '@/components/DashboardPreview'
 import InteractiveKanban from '@/components/InteractiveKanban'
 import SmartFlows from '@/components/SmartFlows'
 import Integrations from '@/components/Integrations'
-import AnimatedMetrics from '@/components/AnimatedMetrics'
 import FinalCTA from '@/components/FinalCTA'
+import EyeTransition from '@/components/EyeTransition'
 
 import ChatDemo from '@/components/ChatDemo'
 import SetupDemo from '@/components/SetupDemo'
@@ -20,32 +20,26 @@ export default function Home() {
       <Header />
       
       <div className="flex flex-col gap-0">
-        <Hero />
-        <div id="como-funciona">
-          <ChatDemo />
-        </div>
+        <EyeTransition childrenA={<Hero />} childrenB={<div id="como-funciona"><ChatDemo /></div>} variant="close" />
 
         <SetupDemo />
         
-        {/* Dashboard Preview restaurado */}
         <DashboardPreview />
         
         <InteractiveKanban />
         
         <Integrations />
         
-        {/* Adicionando SmartFlows abaixo de Integrations */}
         <SmartFlows />
         
-        <Comparison />
-        <div id="garantia">
-          <Guarantee />
+        <div id="comparison">
+          <Comparison />
         </div>
+        
+        <EyeTransition childrenA={<div id="garantia"><Guarantee /></div>} childrenB={<div id="final-cta"><FinalCTA /></div>} variant="open" />
+        
         <div id="faq">
           <FAQ />
-        </div>
-        <div id="final-cta">
-          <FinalCTA />
         </div>
       </div>
 

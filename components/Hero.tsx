@@ -59,7 +59,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
         <video
           ref={videoRef}
-          className={`min-w-full min-h-full object-cover blur-0 scale-[0.50] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
+          className={`min-w-full min-h-full object-cover blur-0 scale-[0.40] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
           muted
           playsInline
           onTimeUpdate={handleTimeUpdate}
@@ -71,10 +71,11 @@ export default function Hero() {
         <div className="absolute inset-0 bg-adv-black/55 z-10" />
       </div>
 
-      {/* Static Ambient Glows (Dispersos e Variados) */}
-      <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-orange-600/20 rounded-full blur-[120px] pointer-events-none z-0 opacity-50 mix-blend-screen" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#F3CEA1]/10 rounded-full blur-[120px] pointer-events-none z-0 opacity-50" />
-      <div className="absolute top-[40%] right-[-5%] w-[400px] h-[400px] bg-orange-500/10 rounded-full blur-[100px] pointer-events-none z-0 opacity-30" />
+      {/* Orbes radiais douradas AdvHub */}
+      <div className="absolute top-[-10%] left-[-10%] w-[700px] h-[700px] bg-[#FFB84D]/15 rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute bottom-[-15%] right-[-10%] w-[650px] h-[650px] bg-[#F3CEA1]/18 rounded-full blur-[130px] pointer-events-none z-0" />
+      <div className="absolute top-[40%] right-[-5%] w-[500px] h-[500px] bg-[#FFB84D]/10 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-[20%] left-[-5%] w-[400px] h-[400px] bg-[#F3CEA1]/12 rounded-full blur-[100px] pointer-events-none z-0" />
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         
@@ -142,7 +143,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{ delay: 2, duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-8 flex flex-col items-center gap-2 z-20 pointer-events-none"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 pointer-events-none"
       >
         <span className="text-[10px] uppercase tracking-widest text-slate-500 font-medium">Scroll</span>
         <div className="w-[1px] h-8 bg-gradient-to-b from-slate-500 to-transparent" />

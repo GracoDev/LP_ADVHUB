@@ -98,8 +98,10 @@ export default function Integrations() {
 
   return (
     <section id="integracoes" className="py-32 bg-[#050505] relative border-t border-white/5 overflow-hidden">
-      {/* Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#F3CEA1]/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-[#FFB84D]/12 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[-15%] left-[20%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[5%] w-[500px] h-[500px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-[1000px] mx-auto px-6 relative z-10">
         
@@ -325,7 +327,7 @@ export default function Integrations() {
           <div className="order-1 relative w-full flex items-center justify-center min-h-[550px]">
              <div className="relative z-20 w-full max-w-[400px] mx-auto flex justify-center">
                 {/* Single Phone Frame with Internal Transitions */}
-                <PhoneFrame className="h-[550px] w-[300px] shrink-0">
+                <PhoneFrame className="h-[550px] !w-[320px] !max-w-[320px] shrink-0">
                   <div className="relative flex-1 overflow-hidden">
                     {/* 1. VIEW CHAT */}
                     <motion.div 

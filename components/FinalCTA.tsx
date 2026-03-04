@@ -47,7 +47,7 @@ export default function FinalCTA() {
       <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
         <video
           ref={videoRef}
-          className={`min-w-full min-h-full object-cover blur-0 scale-[0.50] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
+          className={`min-w-full min-h-full object-cover blur-0 scale-[0.40] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
           muted
           playsInline
           onTimeUpdate={handleTimeUpdate}
@@ -59,7 +59,10 @@ export default function FinalCTA() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-[#050505]/35 z-10" />
       </div>
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#F3CEA1]/5 rounded-full blur-[150px] pointer-events-none z-10" />
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] bg-[#FFB84D]/15 rounded-full blur-[160px] pointer-events-none z-10" />
+      <div className="absolute top-[-20%] left-[20%] w-[500px] h-[500px] bg-[#F3CEA1]/12 rounded-full blur-[120px] pointer-events-none z-10" />
+      <div className="absolute bottom-[-15%] right-[15%] w-[600px] h-[600px] bg-[#FFB84D]/10 rounded-full blur-[130px] pointer-events-none z-10" />
       
       <div className="max-w-5xl mx-auto px-6 text-center relative z-20">
         <h2 className="text-5xl lg:text-8xl font-bold text-white mb-8 tracking-tighter leading-[0.9]">

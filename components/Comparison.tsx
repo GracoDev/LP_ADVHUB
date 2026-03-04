@@ -6,6 +6,10 @@ import { Check, X, Clock, MessageSquare, AlertCircle, TrendingUp, Users, Refresh
 export default function Comparison() {
   return (
     <section className="py-24 bg-adv-black relative overflow-hidden">
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] bg-[#FFB84D]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-5%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-[15%] left-[-10%] w-[500px] h-[400px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 max-w-3xl mx-auto">

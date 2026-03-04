@@ -45,8 +45,10 @@ export default function SmartFlows() {
   }
   return (
     <section className="py-32 bg-adv-black relative overflow-hidden">
-      {/* Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#F3CEA1]/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Orbes radiais douradas */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#FFB84D]/12 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-[#F3CEA1]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[5%] left-[-5%] w-[400px] h-[400px] bg-[#FFB84D]/8 rounded-full blur-[100px] pointer-events-none" />
       
       <div className="max-w-[1000px] mx-auto px-6 relative z-10">
         
