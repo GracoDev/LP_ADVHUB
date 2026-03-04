@@ -1,7 +1,8 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { QrCode, Smartphone, Check, Laptop, Wifi, Zap } from 'lucide-react'
+import { QrCode, Check, Wifi, Zap, MessageSquare, TrendingUp, Calendar, Clock, LayoutGrid, User, Hash, Send, Folder, Braces, Settings } from 'lucide-react'
+import FloatingPixels from './FloatingPixels'
 import { useState, useEffect } from 'react'
 
 export default function SetupDemo() {
@@ -53,8 +54,8 @@ export default function SetupDemo() {
         setStep(4) // Celular sobe
         await new Promise(r => setTimeout(r, 1000))
         
-        setStep(5) // Escaneando
-        await new Promise(r => setTimeout(r, 2000))
+        setStep(5) // Escaneando (mais rápido, linha verde passa 1x)
+        await new Promise(r => setTimeout(r, 900))
         
         setStep(6) // Sucesso (Conectado)
         await new Promise(r => setTimeout(r, 1500))
@@ -67,11 +68,12 @@ export default function SetupDemo() {
   }, [])
 
   return (
-    <section className="py-24 pb-32 bg-adv-black relative overflow-hidden border-t border-white/5">
+    <section className="pt-12 pb-24 md:pt-16 md:pb-28 bg-adv-black relative overflow-hidden border-t border-white/5">
       {/* Orbes radiais douradas */}
       <div className="absolute top-1/2 left-[-15%] -translate-y-1/2 w-[550px] h-[550px] bg-[#FFB84D]/10 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-[#F3CEA1]/12 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none" />
+      <FloatingPixels />
       <div className="max-w-7xl mx-auto px-6">
         
         <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -92,7 +94,7 @@ export default function SetupDemo() {
                 <span className="text-adv-gold">em menos de 1 minuto.</span>
               </h2>
               <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-                Sem configurações complexas ou necessidade de TI. Basta fazer login na plataforma e escanear o QR Code, como no WhatsApp Web.
+                Sem complexidade ou necessidade de TI. Basta fazer login na plataforma e escanear o QR Code, como no WhatsApp Web.
               </p>
               
               <ul className="space-y-4">
@@ -116,55 +118,45 @@ export default function SetupDemo() {
           {/* Lado Direito: Animação Notebook + Celular */}
           <div className="order-1 lg:order-2 flex justify-center perspective-[2000px] relative">
             
-            {/* Speed Lines Animation - Indica rapidez */}
-            <AnimatePresence>
-                {step >= 3 && step < 7 && (
-                    <motion.div 
-                        className="absolute inset-0 z-0 pointer-events-none"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        {[...Array(5)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                className="absolute h-[2px] bg-adv-gold/30 rounded-full"
-                                style={{
-                                    top: `${20 + i * 15}%`,
-                                    left: -100,
-                                    right: -100,
-                                }}
-                                animate={{
-                                    x: ['-100%', '100%'],
-                                    opacity: [0, 1, 0]
-                                }}
-                                transition={{
-                                    duration: 0.8,
-                                    repeat: Infinity,
-                                    delay: i * 0.1,
-                                    ease: "linear"
-                                }}
-                            />
-                        ))}
+            {/* Linhas e raios de velocidade – sempre visíveis */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute h-[2px] bg-adv-gold/30 rounded-full"
+                  style={{
+                    top: `${20 + i * 15}%`,
+                    left: -100,
+                    right: -100,
+                  }}
+                  animate={{
+                    x: ['-100%', '100%'],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                    ease: "linear"
+                  }}
+                />
+              ))}
 
-                        {/* Raios de velocidade */}
-                        <motion.div
-                            className="absolute top-1/4 right-0 text-adv-gold/40"
-                            animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
-                            transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 0.2 }}
-                        >
-                            <Zap className="w-8 h-8 rotate-12" />
-                        </motion.div>
-                        <motion.div
-                            className="absolute bottom-1/4 left-0 text-adv-gold/40"
-                            animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
-                            transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 0.3 }}
-                        >
-                            <Zap className="w-6 h-6 -rotate-12" />
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+              <motion.div
+                className="absolute top-1/4 right-0 text-adv-gold/40"
+                animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 0.2 }}
+              >
+                <Zap className="w-8 h-8 rotate-12" />
+              </motion.div>
+              <motion.div
+                className="absolute bottom-1/4 left-0 text-adv-gold/40"
+                animate={{ opacity: [0, 1, 0], scale: [0.8, 1.2, 0.8] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 0.3 }}
+              >
+                <Zap className="w-6 h-6 -rotate-12" />
+              </motion.div>
+            </div>
 
             <div className="relative w-full max-w-[500px] h-[350px] z-10">
               
@@ -229,12 +221,13 @@ export default function SetupDemo() {
                     <div className="p-4 bg-white rounded-xl relative overflow-hidden">
                       <QrCode className="w-32 h-32 text-black" />
                       
-                      {/* Scanner Line (Visual Feedback no PC também) */}
+                      {/* Scanner Line – uma única passada */}
                       {step >= 5 && step < 6 && (
                         <motion.div 
                           className="absolute top-0 left-0 w-full h-1 bg-green-500 shadow-[0_0_10px_#22c55e]"
-                          animate={{ top: ['0%', '100%'] }}
-                          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                          initial={{ top: '0%' }}
+                          animate={{ top: '100%' }}
+                          transition={{ duration: 0.6, ease: "easeInOut" }}
                         />
                       )}
 
@@ -252,99 +245,188 @@ export default function SetupDemo() {
                     <p className="text-gray-500 text-xs mt-4">Abra o WhatsApp {'>'} Menu {'>'} Aparelhos conectados</p>
                   </motion.div>
 
-                  {/* Cenário 3: Dashboard (estilo DashboardPreview, métricas animadas) */}
+                  {/* Cenário 3: Dashboard detalhado (igual ao print) */}
                   <motion.div 
-                    className="absolute inset-0 bg-[#0f0f0f] flex flex-col p-3 overflow-hidden"
+                    className="absolute inset-0 bg-[#141414] flex overflow-hidden"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: step === 7 ? 1 : 0 }}
                     transition={{ duration: 0.4 }}
                   >
-                    {/* Header */}
-                    <div className="w-full h-6 border-b border-white/10 flex items-center justify-between mb-2 shrink-0">
-                        <div className="text-[9px] text-gray-400 font-bold">DASHBOARD</div>
+                    {/* Sidebar esquerda */}
+                    <div className="w-8 bg-[#1a1a1a] border-r border-white/5 flex flex-col items-center py-2 gap-1 shrink-0">
+                      {[
+                        { Icon: MessageSquare },
+                        { Icon: LayoutGrid },
+                        { Icon: User },
+                        { Icon: Hash },
+                        { Icon: Send, active: true },
+                        { Icon: Folder },
+                        { Icon: Braces },
+                      ].map(({ Icon, active }, i) => (
+                        <motion.div
+                          key={i}
+                          className={`p-1 rounded ${active ? 'bg-adv-gold/20 text-adv-gold' : 'text-gray-500'}`}
+                          initial={{ opacity: 0 }}
+                          animate={step === 7 ? { opacity: 1 } : {}}
+                          transition={{ delay: 0.05 * i }}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                        </motion.div>
+                      ))}
+                      <div className="flex-1 min-h-2" />
+                      <Settings className="w-3.5 h-3.5 text-gray-500" />
+                    </div>
+
+                    {/* Conteúdo principal */}
+                    <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+                      {/* Header */}
+                      <div className="h-6 bg-[#1a1a1a] border-b border-white/5 flex items-center justify-between px-2 shrink-0">
+                        <span className="text-[9px] text-white/80 font-semibold">DASHBOARD</span>
                         <div className="flex gap-1">
-                             <div className="w-1.5 h-1.5 rounded-full bg-red-500"/>
-                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"/>
-                             <div className="w-1.5 h-1.5 rounded-full bg-green-500"/>
+                          <div className="w-2 h-2 rounded-full bg-[#ff5f57]" />
+                          <div className="w-2 h-2 rounded-full bg-[#febc2e]" />
+                          <div className="w-2 h-2 rounded-full bg-[#28c840]" />
                         </div>
-                    </div>
-                    
-                    {/* Cards de métricas (como DashboardPreview) */}
-                    <div className="grid grid-cols-4 gap-1.5 mb-2 shrink-0">
+                      </div>
+                      
+                      {/* KPIs com subtítulos */}
+                      <div className="grid grid-cols-4 gap-1.5 p-1.5 shrink-0">
                         {[
-                            { label: 'Chats', value: 53, color: 'text-white', pulse: false },
-                            { label: 'Conversão', value: '35.9%', color: 'text-green-400', pulse: false },
-                            { label: 'Reuniões', value: 18, color: 'text-white', pulse: false },
-                            { label: '24/7', value: '0.0%', color: 'text-adv-gold', pulse: true },
+                          { label: 'Total de Chats', value: '53', sub: 'Todos os atendimentos', icon: MessageSquare, greenBorder: false },
+                          { label: 'Taxa de Conversão', value: '35.9%', sub: 'Chats convertidos em leads', icon: TrendingUp, greenBorder: true },
+                          { label: 'Reuniões Agendadas', value: '18', sub: 'Ativas e completadas', icon: Calendar, greenBorder: false },
+                          { label: 'Atendimento 24/7', value: '0.0%', sub: '0 fora do horário', icon: Clock, greenBorder: false },
                         ].map((m, i) => (
-                            <motion.div 
-                                key={i}
-                                className="bg-white/5 rounded-lg p-1.5 border border-white/5"
-                                initial={{ opacity: 0, y: 4 }}
-                                animate={step === 7 ? { opacity: 1, y: 0 } : {}}
-                                transition={{ delay: 0.1 * i }}
-                            >
-                                <div className="text-[7px] text-gray-500 truncate">{m.label}</div>
-                                <motion.div 
-                                    className={`text-sm font-bold ${m.color} ${m.pulse ? 'animate-pulse' : ''}`}
-                                    initial={{ opacity: 0 }}
-                                    animate={step === 7 ? { opacity: 1 } : {}}
-                                    transition={{ delay: 0.2 + i * 0.05 }}
-                                >
-                                    {m.value}
-                                </motion.div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Gráfico mini + barras de status */}
-                    <div className="flex gap-2 flex-1 min-h-0">
-                        <div className="flex-1 bg-white/5 rounded-lg p-2 border border-white/5 min-w-0">
-                            <div className="text-[7px] text-gray-500 mb-1">Evolução 7d</div>
-                            <div className="h-12 w-full relative">
-                                <svg viewBox="0 0 100 40" className="w-full h-full" preserveAspectRatio="none">
-                                    <motion.path 
-                                        d="M0,30 Q20,25 40,20 T80,15 T100,10" 
-                                        fill="none" stroke="#FFB84D" strokeWidth="1.5" strokeLinecap="round"
-                                        initial={{ pathLength: 0 }}
-                                        animate={step === 7 ? { pathLength: 1 } : {}}
-                                        transition={{ duration: 1.2, delay: 0.5 }}
-                                    />
-                                </svg>
+                          <motion.div 
+                            key={i}
+                            className={`bg-[#1e1e1e] rounded-lg p-1.5 border border-white/5 ${m.greenBorder ? 'border-t-green-500/50' : ''}`}
+                            initial={{ opacity: 0, y: 4 }}
+                            animate={step === 7 ? { opacity: 1, y: 0 } : {}}
+                            transition={{ delay: 0.06 * i }}
+                          >
+                            <div className="flex justify-between">
+                              <span className="text-[7px] text-gray-400 truncate">{m.label}</span>
+                              <m.icon className={`w-3 h-3 shrink-0 ${m.greenBorder ? 'text-green-400' : 'text-gray-500'}`} />
                             </div>
-                        </div>
-                        <div className="w-20 bg-white/5 rounded-lg p-1.5 border border-white/5 shrink-0 space-y-1">
-                            {[
-                                { label: 'Qualif.', val: '18.9%', color: 'bg-blue-500' },
-                                { label: 'Contrato', val: '13.2%', color: 'bg-adv-gold' },
-                                { label: 'Desqual.', val: '11.3%', color: 'bg-purple-500' },
-                            ].map((b, i) => (
-                                <div key={i}>
-                                    <div className="flex justify-between text-[6px] text-gray-500">
-                                        <span className="truncate">{b.label}</span>
-                                        <span>{b.val}</span>
-                                    </div>
-                                    <div className="h-0.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                        <motion.div 
-                                            className={`h-full rounded-full ${b.color}`}
-                                            initial={{ width: 0 }}
-                                            animate={step === 7 ? { width: b.val } : {}}
-                                            transition={{ duration: 0.8, delay: 0.6 + i * 0.1 }}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                            <span className={`text-sm font-bold ${m.greenBorder ? 'text-green-400' : 'text-white'} ${m.label.includes('24/7') ? 'animate-pulse' : ''}`}>{m.value}</span>
+                            <div className="text-[6px] text-gray-500 truncate">{m.sub}</div>
+                          </motion.div>
+                        ))}
+                      </div>
 
-                    <motion.div 
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: step === 7 ? 1 : 0.8, opacity: step === 7 ? 1 : 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold shadow-lg whitespace-nowrap"
-                    >
+                      {/* Grid: Evolução Temporal + Donut | Distribuição + Horário */}
+                      <div className="flex gap-1.5 px-1.5 flex-1 min-h-0">
+                        {/* Evolução Temporal */}
+                        <div className="flex-1 bg-[#1e1e1e] rounded-lg p-1.5 border border-white/5 min-w-0 flex flex-col">
+                          <div className="flex justify-between items-center mb-1">
+                            <div>
+                              <div className="text-[8px] font-medium text-white">Evolução Temporal</div>
+                              <div className="text-[6px] text-gray-500">Chats e reuniões no período</div>
+                            </div>
+                            <div className="flex gap-0.5">
+                              <span className="px-1 py-0.5 text-[6px] bg-white/10 rounded text-white">7d</span>
+                              <span className="px-1 py-0.5 text-[6px] bg-adv-gold/20 rounded text-adv-gold">30d</span>
+                              <span className="px-1 py-0.5 text-[6px] text-gray-500">90d</span>
+                              <span className="px-1 py-0.5 text-[6px] text-gray-500">1a</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-1 mb-0.5">
+                            <span className="text-[6px] text-gray-500">AGRUPAR POR</span>
+                            <span className="px-1 text-[6px] bg-white/10 rounded text-white">Dia</span>
+                            <span className="px-1 text-[6px] text-gray-500">Semana</span>
+                            <span className="px-1 text-[6px] text-gray-500">Mês</span>
+                          </div>
+                          <div className="h-10 w-full relative flex-1 min-h-[32px]">
+                            <svg viewBox="0 0 100 40" className="w-full h-full" preserveAspectRatio="none">
+                              <motion.path d="M0,35 Q25,30 50,22 T100,8" fill="none" stroke="#FFB84D" strokeWidth="2" strokeLinecap="round"
+                                initial={{ pathLength: 0 }} animate={step === 7 ? { pathLength: 1 } : {}}
+                                transition={{ duration: 1, delay: 0.3 }} />
+                              <motion.path d="M0,38 Q25,34 50,28 T100,18" fill="none" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round" opacity={0.8}
+                                initial={{ pathLength: 0 }} animate={step === 7 ? { pathLength: 1 } : {}}
+                                transition={{ duration: 1, delay: 0.4 }} />
+                            </svg>
+                          </div>
+                          <div className="text-[6px] text-gray-500">12 jan — 10 fev</div>
+                        </div>
+
+                        {/* Taxa de Conversão (Donut) */}
+                        <div className="w-20 bg-[#1e1e1e] rounded-lg p-1.5 border border-white/5 shrink-0 flex flex-col items-center justify-center">
+                          <div className="text-[7px] font-medium text-white">Taxa de Conversão</div>
+                          <div className="text-[6px] text-gray-500 mb-1">Performance atual</div>
+                          <div className="relative w-12 h-12">
+                            <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                              <circle cx="18" cy="18" r="14" fill="none" stroke="#2a2a2a" strokeWidth="4" />
+                              <motion.circle cx="18" cy="18" r="14" fill="none" stroke="#FFB84D" strokeWidth="4" strokeLinecap="round"
+                                strokeDasharray="88" initial={{ strokeDashoffset: 88 }} animate={step === 7 ? { strokeDashoffset: 55 } : {}}
+                                transition={{ duration: 0.8, delay: 0.5 }} />
+                            </svg>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <span className="text-[10px] font-bold text-white">35.9%</span>
+                              <span className="text-[5px] text-gray-500">conversão</span>
+                            </div>
+                          </div>
+                          <div className="flex gap-1 mt-0.5">
+                            <span className="text-[6px] text-green-400 flex items-center gap-0.5">● 7 contratos</span>
+                          </div>
+                          <span className="text-[6px] text-gray-500">10 qualificados</span>
+                        </div>
+                      </div>
+
+                      {/* Distribuição por Status + Horário */}
+                      <div className="flex gap-1.5 px-1.5 pb-1.5 flex-1 min-h-0">
+                        <div className="flex-1 bg-[#1e1e1e] rounded-lg p-1.5 border border-white/5 min-w-0">
+                          <div className="text-[8px] font-medium text-white">Distribuição por Status</div>
+                          <div className="text-[6px] text-gray-500 mb-1">Chats em cada estágio do funil</div>
+                          {[
+                            { label: 'Recepção prev', count: '', val: '0.0%', color: 'bg-adv-gold', dot: 'bg-adv-gold' },
+                            { label: 'Desqualificado', count: '6', val: '11.3%', color: 'bg-purple-500', dot: 'bg-purple-500' },
+                            { label: 'Contrato Assinado', count: '7', val: '13.2%', color: 'bg-adv-gold', dot: 'bg-adv-gold' },
+                            { label: 'Humano', count: '9', val: '17.0%', color: 'bg-gray-600', dot: 'bg-gray-500' },
+                          ].map((b, i) => (
+                            <div key={i} className="flex items-center gap-1 mb-0.5">
+                              <div className={`w-1 h-1 rounded-full ${b.dot}`} />
+                              <span className="text-[6px] text-gray-400 w-20 truncate">{b.label}</span>
+                              {b.count && <span className="text-[6px] text-gray-500">{b.count}</span>}
+                              <span className="text-[6px] text-gray-500 ml-auto">{b.val}</span>
+                              <div className="flex-1 max-w-12 h-1 bg-white/5 rounded overflow-hidden">
+                                <motion.div 
+                                  className={`h-full rounded ${b.color}`}
+                                  initial={{ width: 0 }} 
+                                  animate={step === 7 ? { width: b.val } : { width: 0 }}
+                                  transition={{ duration: 0.6, delay: 0.5 + i * 0.08 }} 
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="w-16 bg-[#1e1e1e] rounded-lg p-1.5 border border-white/5 shrink-0 flex flex-col items-center justify-center">
+                          <div className="text-[7px] font-medium text-white text-center">Horário de Atendimento</div>
+                          <div className="text-[6px] text-gray-500 text-center mb-1">Distribuição comercial</div>
+                          <div className="relative w-10 h-10">
+                            <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                              <circle cx="18" cy="18" r="14" fill="none" stroke="#2a2a2a" strokeWidth="4" />
+                              <motion.circle cx="18" cy="18" r="14" fill="none" stroke="#FFB84D" strokeWidth="4" strokeLinecap="round"
+                                strokeDasharray="88" initial={{ strokeDashoffset: 88 }} animate={step === 7 ? { strokeDashoffset: 10 } : {}}
+                                transition={{ duration: 0.8, delay: 0.6 }} />
+                            </svg>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <span className="text-[9px] font-bold text-white">53</span>
+                              <span className="text-[5px] text-gray-500">total</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Sincronização Concluída */}
+                      <motion.div 
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: step === 7 ? 1 : 0.95, opacity: step === 7 ? 1 : 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="mx-1.5 mb-1.5 py-1 bg-green-600 text-white text-[8px] text-center rounded font-semibold"
+                      >
                         Sincronização Concluída
-                    </motion.div>
+                      </motion.div>
+                    </div>
                   </motion.div>
 
                 </div>
@@ -385,12 +467,13 @@ export default function SetupDemo() {
                       <div className="w-full h-[1px] bg-white/20" />
                       <div className="h-full w-[1px] bg-white/20 absolute" />
                       
-                      {/* Scanning Line */}
+                      {/* Scanning Line – uma única passada */}
                       {step === 5 && (
                         <motion.div 
                           className="absolute w-full h-[2px] bg-green-500 shadow-[0_0_10px_#22c55e]"
-                          animate={{ top: ['0%', '100%'] }}
-                          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                          initial={{ top: '0%' }}
+                          animate={{ top: '100%' }}
+                          transition={{ duration: 0.6, ease: "easeInOut" }}
                         />
                       )}
                    </div>

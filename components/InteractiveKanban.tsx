@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable, DropResult, DraggableStyle } fro
 import { GripVertical, MousePointer2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Logo from './Logo'
+import FloatingPixels from './FloatingPixels'
 
 // Tipos
 type Card = {
@@ -194,8 +195,8 @@ export default function InteractiveKanban() {
       setColumns(prev => {
         const newCols = JSON.parse(JSON.stringify(prev))
 
-        // 0. RESET: quando fechado atinge 5 cards, inicia animação de retorno
-        if (newCols.fechado.cards.length >= 5) {
+        // 0. RESET: quando fechado atinge 4 cards, inicia animação de retorno (máx 4 por status)
+        if (newCols.fechado.cards.length >= 4) {
           isResettingRef.current = true
           setIsResetting(true)
           resetQueueRef.current = []
@@ -228,8 +229,8 @@ export default function InteractiveKanban() {
           return prev
         }
 
-        // 1. Cria novo lead na recepção se vazio
-        if (newCols.recepcao.cards.length === 0) {
+        // 1. Cria novo lead na recepção se tiver menos de 4
+        if (newCols.recepcao.cards.length < 4) {
           const nextLead = newLeads[leadCounter.current % newLeads.length]
           leadCounter.current += 1
           newCols.recepcao.cards.push({
@@ -243,11 +244,13 @@ export default function InteractiveKanban() {
         }
 
         // 2. Encontra próximo movimento (prioridade: contrato→fechado, qualificado→contrato, recepcao→qualificado)
+        // Máx 4 cards por coluna
         for (let i = COLUMN_ORDER.length - 2; i >= 0; i--) {
           const fromColId = COLUMN_ORDER[i]
           const toColId = COLUMN_ORDER[i + 1]
           const fromCol = newCols[fromColId]
-          if (fromCol.cards.length > 0) {
+          const toCol = newCols[toColId]
+          if (fromCol.cards.length > 0 && toCol.cards.length < 4) {
             const cardIndex = fromColId === 'recepcao'
               ? (() => { const idx = fromCol.cards.findIndex((c: Card) => c.time !== 'Novo'); return idx >= 0 ? idx : 0 })()
               : 0
@@ -331,7 +334,7 @@ export default function InteractiveKanban() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FFB84D]/12 rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute top-0 right-[-10%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none z-0" />
       <div className="absolute bottom-[-15%] left-[-5%] w-[500px] h-[400px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none z-0" />
-
+      <FloatingPixels />
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <span className="text-adv-gold text-xs font-bold tracking-widest uppercase mb-4 block">

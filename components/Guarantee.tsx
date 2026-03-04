@@ -2,11 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { ShieldCheck, CheckCircle2 } from 'lucide-react'
+import FloatingPixels from './FloatingPixels'
 
 export default function Guarantee() {
   const scrollToCTA = () => {
     const element = document.getElementById('final-cta')
-    if (element) element.scrollIntoView({ behavior: 'smooth' })
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
   return (
     <section className="py-24 bg-adv-black relative overflow-hidden">
@@ -14,6 +15,7 @@ export default function Guarantee() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#FFB84D]/10 rounded-full blur-[130px] pointer-events-none" />
       <div className="absolute top-[-10%] left-[10%] w-[400px] h-[400px] bg-[#F3CEA1]/8 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-15%] right-[15%] w-[450px] h-[450px] bg-[#FFB84D]/8 rounded-full blur-[110px] pointer-events-none" />
+      <FloatingPixels />
       <div className="max-w-7xl mx-auto px-6">
         <div className="bg-adv-dark rounded-3xl p-8 md:p-12 border border-white/10 shadow-xl shadow-[0_0_50px_rgba(255,184,77,0.06)] max-w-4xl mx-auto text-center relative overflow-hidden">
           

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, FileSignature, Check, Clock, MessageSquare, Smartphone, CheckCircle2, FileText, Download, MousePointer2, MoreHorizontal, Send, User } from 'lucide-react'
 import Logo from './Logo'
+import FloatingPixels from './FloatingPixels'
 
 // Componente PhoneFrame unificado (Visual ChatDemo)
 const PhoneFrame = ({ children, className }: { children: React.ReactNode, className?: string }) => (
@@ -59,37 +60,27 @@ export default function Integrations() {
   }, [])
 
   // Ciclo de animação do ZapSign
-  // 0: Chat View (Initial)
-  // 1: Contract Msg Arrives
-  // 2: Clicking/Downloading (Transition to Doc)
-  // 3: Document View (Top)
-  // 4: Scrolling Down
-  // 5: Signing
-  // 6: Success
-  // 7: Reset
+  // 0: Chat View | 1: Contract Msg | 2: Click/Download | 3: Doc Top
+  // 4: Pequena scroll até assinatura | 5: Clique na área | 6: Assinatura sendo feita | 7: ASSINADO
 
   useEffect(() => {
     const zapSequence = async () => {
       while (true) {
-        setZapStep(0) // Chat view
+        setZapStep(0)
         await new Promise(r => setTimeout(r, 1000))
-
-        setZapStep(1) // Contract msg arrives
+        setZapStep(1)
         await new Promise(r => setTimeout(r, 2000))
-
-        setZapStep(2) // Click animation
+        setZapStep(2)
         await new Promise(r => setTimeout(r, 500))
-
-        setZapStep(3) // Show Document Top
-        await new Promise(r => setTimeout(r, 1000))
-
-        setZapStep(4) // Scroll Down
-        await new Promise(r => setTimeout(r, 4000)) // Increased scroll time
-
-        setZapStep(5) // Signing
-        await new Promise(r => setTimeout(r, 2000))
-
-        setZapStep(6) // Success
+        setZapStep(3)
+        await new Promise(r => setTimeout(r, 800))
+        setZapStep(4) // Pequena scroll até área de assinatura ficar visível
+        await new Promise(r => setTimeout(r, 700)) // scroll rápida
+        setZapStep(5) // Animação de clique
+        await new Promise(r => setTimeout(r, 400))
+        setZapStep(6) // Assinatura sendo desenhada
+        await new Promise(r => setTimeout(r, 1500))
+        setZapStep(7) // ASSINADO
         await new Promise(r => setTimeout(r, 3000))
       }
     }
@@ -102,7 +93,7 @@ export default function Integrations() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-[#FFB84D]/12 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-[-15%] left-[20%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[5%] w-[500px] h-[500px] bg-[#FFB84D]/8 rounded-full blur-[120px] pointer-events-none" />
-      
+      <FloatingPixels />
       <div className="max-w-[1000px] mx-auto px-6 relative z-10">
         
         <div className="text-center mb-20">
@@ -355,42 +346,58 @@ export default function Integrations() {
                         {/* Contrato Msg */}
                         <AnimatePresence>
                           {zapStep >= 1 && (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              className="bg-adv-gold/10 border border-adv-gold/20 p-3 rounded-2xl rounded-tl-none self-end ml-auto max-w-[85%] cursor-pointer group/msg"
-                            >
-                              <div className="flex items-center gap-3 mb-2 bg-black/20 p-2 rounded-lg">
-                                <div className="bg-white p-1 rounded">
-                                  <FileText className="w-5 h-5 text-red-500" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-[10px] text-white font-medium truncate">Contrato_Prestacao.pdf</p>
-                                  <p className="text-[8px] text-white/60">3 páginas • 120 KB</p>
-                                </div>
-                                <Download className="w-4 h-4 text-white/60" />
-                              </div>
-                              <p className="text-sm text-adv-gold/90">Olá! Segue o contrato para assinatura.</p>
-                              <div className="flex justify-end items-center gap-1 mt-1 opacity-50">
-                                <span className="text-[10px]">11:05</span>
-                                <Check className="w-3 h-3" />
-                              </div>
-                              <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-adv-gold/20">
-                                <Logo className="h-3 w-auto opacity-80" />
-                                <span className="text-[8px] text-adv-gold/70 uppercase tracking-wider">Enviado automaticamente</span>
-                              </div>
-
-                              {/* Finger/Click Hint */}
+                            <div className="relative self-end ml-auto max-w-[85%]">
+                              {/* Cursor/Clique – aparece e "tapa" no contrato (step 2) */}
                               {zapStep === 2 && (
-                                <motion.div 
-                                  initial={{ opacity: 0, scale: 0 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  className="absolute -bottom-2 -right-2 bg-white/20 p-1 rounded-full"
+                                <motion.div
+                                  className="absolute -top-6 right-4 z-10 pointer-events-none"
+                                  initial={{ opacity: 0, y: -12, scale: 0.8 }}
+                                  animate={{ 
+                                    opacity: 1, 
+                                    y: [0, 8, 8],
+                                    scale: [1, 1, 0.9]
+                                  }}
+                                  transition={{ 
+                                    duration: 0.5,
+                                    times: [0, 0.4, 1]
+                                  }}
                                 >
-                                  <div className="w-4 h-4 rounded-full bg-white/50 animate-ping" />
+                                  <MousePointer2 className="w-6 h-6 text-white drop-shadow-lg" fill="white" />
                                 </motion.div>
                               )}
-                            </motion.div>
+                              <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ 
+                                  opacity: 1, 
+                                  y: 0,
+                                  scale: zapStep === 2 ? [1, 0.96, 0.96] : 1
+                                }}
+                                transition={{ 
+                                  scale: zapStep === 2 ? { duration: 0.5, times: [0, 0.35, 1] } : {}
+                                }}
+                                className="relative bg-adv-gold/10 border border-adv-gold/20 p-3 rounded-2xl rounded-tl-none cursor-pointer group/msg"
+                              >
+                                <div className="flex items-center gap-3 mb-2 bg-black/20 p-2 rounded-lg">
+                                  <div className="bg-white p-1 rounded">
+                                    <FileText className="w-5 h-5 text-red-500" />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-[10px] text-white font-medium truncate">Contrato_Prestacao.pdf</p>
+                                    <p className="text-[8px] text-white/60">3 páginas • 120 KB</p>
+                                  </div>
+                                  <Download className="w-4 h-4 text-white/60" />
+                                </div>
+                                <p className="text-sm text-adv-gold/90">Olá! Segue o contrato para assinatura.</p>
+                                <div className="flex justify-end items-center gap-1 mt-1 opacity-50">
+                                  <span className="text-[10px]">11:05</span>
+                                  <Check className="w-3 h-3" />
+                                </div>
+                                <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-adv-gold/20">
+                                  <Logo className="h-3 w-auto opacity-80" />
+                                  <span className="text-[8px] text-adv-gold/70 uppercase tracking-wider">Enviado automaticamente</span>
+                                </div>
+                              </motion.div>
+                            </div>
                           )}
                         </AnimatePresence>
                       </div>
@@ -429,8 +436,8 @@ export default function Integrations() {
                       <div className="flex-1 relative overflow-hidden bg-adv-black">
                         <motion.div 
                           className="absolute top-0 left-0 right-0 p-4 space-y-4"
-                          animate={{ y: zapStep >= 4 ? -130 : 0 }} 
-                          transition={{ duration: 4, ease: "linear", delay: 0.5 }}
+                          animate={{ y: zapStep >= 4 ? -90 : 0 }} 
+                          transition={{ duration: 0.5, ease: "easeOut" }}
                         >
                           {/* Realistic Contract Text */}
                           <div className="space-y-3">
@@ -479,19 +486,29 @@ export default function Integrations() {
                             <p className="text-[8px] font-bold text-white mb-4">ASSINATURA DO CONTRATANTE</p>
                             
                             <div className="relative bg-adv-card border border-white/10 rounded-md p-4 flex flex-col items-center justify-center gap-2 min-h-[100px]">
+                              {/* Estado: Clique para assinar (com animação de clique no step 5) */}
                               {zapStep < 6 && (
-                                <>
-                                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mb-1">
+                                <motion.div 
+                                  className="flex flex-col items-center"
+                                  animate={zapStep === 5 ? { scale: [1, 0.92, 1] } : {}}
+                                  transition={{ duration: 0.25 }}
+                                >
+                                  <motion.div 
+                                    className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mb-1"
+                                    animate={zapStep === 5 ? { scale: [1, 0.85, 1] } : {}}
+                                    transition={{ duration: 0.25 }}
+                                  >
                                     <FileSignature className="w-4 h-4 text-white" />
-                                  </div>
+                                  </motion.div>
                                   <p className="text-[8px] text-gray-400 font-medium">Clique para assinar digitalmente</p>
                                   <p className="text-[6px] text-gray-500">IP: 192.168.1.1 • Data: 03/03/2026</p>
-                                </>
+                                </motion.div>
                               )}
 
-                              {zapStep >= 5 && (
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                   <svg className="w-[80%] h-[60%]" viewBox="0 0 200 100">
+                              {/* Assinatura sendo desenhada (step 6) */}
+                              {zapStep >= 6 && zapStep < 7 && (
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-2">
+                                  <svg className="w-[85%] h-[70%]" viewBox="0 0 200 100">
                                     <motion.path
                                       d="M 20 60 C 20 60 40 20 50 40 C 60 70 30 80 40 60 C 50 40 90 30 110 50 C 130 70 120 90 140 80 C 160 70 180 50 190 60"
                                       fill="transparent"
@@ -499,7 +516,7 @@ export default function Integrations() {
                                       strokeWidth="2"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
-                                      initial={{ pathLength: 0, opacity: 0 }}
+                                      initial={{ pathLength: 0, opacity: 1 }}
                                       animate={{ pathLength: 1, opacity: 1 }}
                                       transition={{ duration: 1.2, ease: "easeInOut" }}
                                     />
@@ -507,15 +524,17 @@ export default function Integrations() {
                                 </div>
                               )}
 
+                              {/* Estado ASSINADO (step 7) */}
                               <AnimatePresence>
-                                {zapStep >= 6 && (
+                                {zapStep >= 7 && (
                                   <motion.div 
-                                    initial={{ scale: 2, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    className="absolute inset-0 bg-green-950/90 flex items-center justify-center"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="absolute inset-0 bg-green-950/90 border border-green-600/50 rounded-md flex items-center justify-center"
                                   >
-                                    <div className="border-2 border-green-500 text-green-400 px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
-                                      <Check className="w-3 h-3" />
+                                    <div className="border-2 border-green-500 text-green-400 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                                      <Check className="w-3.5 h-3.5" />
                                       Assinado
                                     </div>
                                   </motion.div>
@@ -561,7 +580,7 @@ export default function Integrations() {
               Contratos Assinados no WhatsApp
             </h3>
             <p className="text-slate-400 mb-8 leading-relaxed">
-              Reduza o tempo de fechamento de dias para minutos. A IA gera o contrato, envia o link e cobra a assinatura, tudo automaticamente.
+              Sem atrasos no fechamento de contratos. A IA gera o contrato, envia o link e cobra a assinatura, tudo automaticamente.
             </p>
             <ul className="space-y-4">
               {[

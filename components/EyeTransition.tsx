@@ -54,14 +54,15 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
     setProgress(scrollYProgress.get())
   }, [scrollYProgress])
 
-  // Variante CLOSE: pálpebras só fecham (0→0.5), ficam fechadas, seção seguinte surge após fechar totalmente
+  // Variante CLOSE: pálpebras fecham (0→0.35), terminam mais cedo para scroll fluir
   // Variante OPEN: 0→0.25 Guarantee some aos poucos; 0.2→0.25 tela preta; 0.25→1 pálpebras abrem
+  const LIDS_CLOSE_END = 0.35   // pálpebras totalmente fechadas (close) - antes era 0.5
   const FADE_OUT_END = 0.25   // Guarantee totalmente sumida (fade gradual 0→0.25)
   const LIDS_START = 0.28     // pálpebras começam a abrir (breve tela preta entre 0.25 e 0.28)
   const topLidHeight = useTransform(
     scrollYProgress,
     variant === 'close'
-      ? [0, 0.5, 1]
+      ? [0, LIDS_CLOSE_END, 1]
       : [LIDS_START, 1],
     variant === 'close'
       ? ['0%', '52%', '52%']
@@ -70,7 +71,7 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
   const bottomLidHeight = useTransform(
     scrollYProgress,
     variant === 'close'
-      ? [0, 0.5, 1]
+      ? [0, LIDS_CLOSE_END, 1]
       : [LIDS_START, 1],
     variant === 'close'
       ? ['0%', '52%', '52%']
@@ -79,24 +80,24 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
 
   // Opacidade das pálpebras: open=visíveis desde FADE_OUT_END (cobrem o gap; evitam flash do B)
   const lidsOpacity = variant === 'close'
-    ? (progress <= 0.5 ? 1 : Math.max(0, 1 - (progress - 0.5) / 0.12))
+    ? (progress <= LIDS_CLOSE_END ? 1 : Math.max(0, 1 - (progress - LIDS_CLOSE_END) / 0.1))
     : (progress >= FADE_OUT_END ? 1 : 0)
 
   // Conteúdo A – close: Hero até pálpebras fecharem; open: Guarantee some AOS POUCOS (0→FADE_OUT_END)
   const opacityA = variant === 'close'
-    ? (progress < 0.5 ? 1 : 0)
+    ? (progress < LIDS_CLOSE_END ? 1 : 0)
     : (progress < FADE_OUT_END ? Math.max(0, 1 - progress / FADE_OUT_END) : 0)
 
   // Conteúdo B – surge após pálpebras fecharem (close) ou quando pálpebras abrem (open)
   const opacityB = variant === 'close'
-    ? (progress >= 0.5 ? 1 : 0)
+    ? (progress >= LIDS_CLOSE_END ? 1 : 0)
     : (progress >= LIDS_START ? 1 : 0)
 
   // Efeito sonho: blur ao surgir (após pálpebras fecharem), depois limpa
-  const dreamBlur = variant === 'close' ? (progress >= 0.5 ? Math.max(0, 5 - (progress - 0.5) * 25) : 0) : 0
+  const dreamBlur = variant === 'close' ? (progress >= LIDS_CLOSE_END ? Math.max(0, 5 - (progress - LIDS_CLOSE_END) * 20) : 0) : 0
 
   // Efeitos de sono: visíveis durante o fechamento; aparição guiada pelo scroll
-  const showSleepEffects = variant === 'close' && progress > 0.005 && progress < 0.49
+  const showSleepEffects = variant === 'close' && progress > 0.005 && progress < LIDS_CLOSE_END - 0.01
   const sleepOpacity = showSleepEffects ? 1 : 0
 
   // Efeitos de acordar: visíveis durante abertura das pálpebras (variante open)
@@ -114,7 +115,16 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
   }
 
   return (
-    <div ref={containerRef} className="h-[300vh] relative w-full">
+    <div ref={containerRef} className="h-[320vh] relative w-full">
+      {/* Âncora de scroll para CTAs - pálpebras abertas, com margem para não overshoot no FAQ */}
+      {variant === 'open' && (
+        <div
+          id="final-cta"
+          className="absolute left-0 right-0 w-full pointer-events-none invisible"
+          style={{ top: '80%', height: 1 }}
+          aria-hidden
+        />
+      )}
       <div className="sticky top-0 h-screen w-full bg-[#050505] overflow-hidden">
         {/* Conteúdo A */}
         <motion.div
@@ -122,6 +132,7 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
           initial={{ opacity: 1 }}
           animate={{ opacity: opacityA }}
           transition={{ duration: 0.12 }}
+          style={{ pointerEvents: opacityA < 0.01 ? 'none' : 'auto' }}
         >
           {childrenA}
         </motion.div>
@@ -135,6 +146,7 @@ export default function EyeTransition({ childrenA, childrenB, variant = 'close' 
             filter: `blur(${dreamBlur}px)`,
           }}
           transition={{ duration: 0.12 }}
+          style={{ pointerEvents: opacityB < 0.01 ? 'none' : 'auto' }}
         >
           {childrenB}
         </motion.div>

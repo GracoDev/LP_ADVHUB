@@ -36,7 +36,7 @@ export default function Home() {
           <Comparison />
         </div>
         
-        <EyeTransition childrenA={<div id="garantia"><Guarantee /></div>} childrenB={<div id="final-cta"><FinalCTA /></div>} variant="open" />
+        <EyeTransition childrenA={<div id="garantia"><Guarantee /></div>} childrenB={<FinalCTA />} variant="open" />
         
         <div id="faq">
           <FAQ />

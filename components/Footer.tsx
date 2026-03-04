@@ -1,8 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import Logo from './Logo'
 import { Instagram } from 'lucide-react'
 
 export default function Footer() {
+  const scrollToCTA = () => {
+    document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
   return (
     <footer className="bg-[#050505] border-t border-white/5 pt-20 pb-16 relative overflow-hidden">
       {/* Orbes radiais douradas */}
@@ -36,9 +41,12 @@ export default function Footer() {
           <Link href="#faq" className="hover:text-[#F3CEA1] transition-colors">
             FAQ
           </Link>
-          <Link href="#final-cta" className="hover:text-adv-gold transition-colors font-bold text-adv-gold">
+          <button
+            onClick={scrollToCTA}
+            className="hover:text-adv-gold transition-colors font-bold text-adv-gold bg-transparent border-none cursor-pointer text-sm font-medium"
+          >
             Adquirir Agora
-          </Link>
+          </button>
         </div>
 
         {/* Instagram Highlight */}

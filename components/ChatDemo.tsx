@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Send, MoreHorizontal, ShieldCheck } from 'lucide-react'
 import Logo from './Logo'
+import FloatingPixels from './FloatingPixels'
 import { useState, useEffect, useRef } from 'react'
 
 const fullConversation = [
@@ -56,7 +57,7 @@ export default function ChatDemo() {
   const scrollToCTA = () => {
     const element = document.getElementById('final-cta');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
@@ -114,12 +115,12 @@ export default function ChatDemo() {
   }, [messages, isTyping])
 
   return (
-    <section className="py-24 bg-adv-black relative overflow-hidden min-h-0">
+    <section className="min-h-screen flex flex-col justify-center py-16 md:py-24 bg-adv-black relative overflow-hidden">
       {/* Orbes radiais douradas */}
       <div className="absolute top-0 right-0 w-[500px] h-[600px] bg-[#FFB84D]/12 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-20%] left-[-10%] w-[450px] h-[450px] bg-[#F3CEA1]/10 rounded-full blur-[110px] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-6">
+      <FloatingPixels />
+      <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Left Column: Text & Explanation */}

@@ -48,15 +48,15 @@ export default function MouseTrail() {
       className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden"
       aria-hidden
     >
-      {/* Glow sutil que segue o cursor - halo tecnológico */}
+      {/* Glow que segue o cursor - halo tecnológico */}
       <motion.div
-        className="absolute w-[220px] h-[220px] rounded-full"
+        className="absolute w-[280px] h-[280px] rounded-full"
         style={{
           left: pos.x,
           top: pos.y,
           transform: 'translate(-50%, -50%)',
-          background: 'radial-gradient(circle, rgba(255, 184, 77, 0.08) 0%, transparent 65%)',
-          filter: 'blur(12px)',
+          background: 'radial-gradient(circle, rgba(255, 184, 77, 0.2) 0%, rgba(255, 184, 77, 0.06) 40%, transparent 70%)',
+          filter: 'blur(10px)',
         }}
         animate={{ left: pos.x, top: pos.y }}
         transition={{ type: 'spring', damping: 35, stiffness: 400 }}
@@ -72,10 +72,10 @@ export default function MouseTrail() {
               left: ripple.x,
               top: ripple.y,
               transform: 'translate(-50%, -50%)',
-              boxShadow: '0 0 0 2px rgba(255, 184, 77, 0.25)',
+              boxShadow: '0 0 0 3px rgba(255, 184, 77, 0.4), 0 0 30px rgba(255, 184, 77, 0.15)',
             }}
-            initial={{ width: 0, height: 0, opacity: 0.6 }}
-            animate={{ width: 100, height: 100, opacity: 0 }}
+            initial={{ width: 0, height: 0, opacity: 0.9 }}
+            animate={{ width: 120, height: 120, opacity: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.45, ease: 'easeOut' }}
           />

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import FloatingPixels from './FloatingPixels'
 
 const faqs = [
   {
@@ -48,6 +49,7 @@ export default function FAQ() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FFB84D]/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-[-15%] right-[5%] w-[400px] h-[400px] bg-[#F3CEA1]/8 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[10%] w-[350px] h-[350px] bg-[#FFB84D]/6 rounded-full blur-[90px] pointer-events-none" />
+      <FloatingPixels />
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center mb-16">
           <motion.h2 
@@ -121,7 +123,7 @@ export default function FAQ() {
         >
           <p className="text-gray-400 mb-6">Ainda tem dúvidas?</p>
           <button 
-            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
             className="px-8 py-3 bg-transparent border border-white/20 rounded-lg text-white font-medium hover:bg-white/5 transition-all shadow-sm"
           >
             Falar com um especialista

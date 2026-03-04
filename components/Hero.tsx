@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 import { Play } from 'lucide-react'
+import FloatingPixels from './FloatingPixels'
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -27,15 +28,20 @@ export default function Hero() {
   }
 
   const handleEnded = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0
-      videoRef.current.play()
+    const v = videoRef.current
+    if (v) {
+      v.muted = true
+      v.currentTime = 0
+      v.play()
     }
   }
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
+    const v = videoRef.current
+    if (v) {
+      v.muted = true
+      v.volume = 0
+      v.play().catch(() => {
         // Autoplay blocked
       })
     }
@@ -43,13 +49,9 @@ export default function Hero() {
 
   const scrollToCTA = () => {
     const element = document.getElementById('final-cta');
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
-  const scrollToDemo = () => {
-    const element = document.getElementById('como-funciona');
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <section 
@@ -62,6 +64,7 @@ export default function Hero() {
           className={`min-w-full min-h-full object-cover blur-0 scale-[0.40] transition-opacity duration-1000 ${isVisible ? 'opacity-50' : 'opacity-0'}`}
           muted
           playsInline
+          onLoadedMetadata={(e) => { e.currentTarget.muted = true; e.currentTarget.volume = 0 }}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
         >
@@ -70,6 +73,9 @@ export default function Hero() {
         {/* Overlay gradiente para garantir legibilidade */}
         <div className="absolute inset-0 bg-adv-black/55 z-10" />
       </div>
+
+      {/* Pixels flutuantes nas laterais (onde o vídeo não cobre) */}
+      <FloatingPixels widerBands />
 
       {/* Orbes radiais douradas AdvHub */}
       <div className="absolute top-[-10%] left-[-10%] w-[700px] h-[700px] bg-[#FFB84D]/15 rounded-full blur-[140px] pointer-events-none z-0" />
@@ -114,7 +120,7 @@ export default function Hero() {
           </button>
           
           <button 
-            onClick={scrollToDemo}
+            onClick={scrollToCTA}
             className="px-10 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-3 group shadow-[0_0_25px_rgba(255,255,255,0.06)]"
           >
             <span>Ver Demonstração</span>

@@ -8,7 +8,7 @@ export default function Header() {
     e.preventDefault();
     const element = document.getElementById('final-cta');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
@@ -38,12 +38,12 @@ export default function Header() {
 
         {/* CTA Button */}
         <div className="flex items-center gap-6">
-          <Link 
-            href="#" 
-            className="hidden md:block text-slate-300 font-medium hover:text-white transition-colors text-sm"
+          <button 
+            onClick={scrollToCTA}
+            className="hidden md:block text-slate-300 font-medium hover:text-white transition-colors text-sm bg-transparent border-none cursor-pointer"
           >
             Entrar
-          </Link>
+          </button>
           <button 
             onClick={scrollToCTA}
             className="px-6 py-2.5 bg-adv-gold text-adv-black rounded-lg font-bold text-sm hover:bg-yellow-400 transition-all hover:shadow-[0_0_15px_rgba(255,184,77,0.3)] transform hover:-translate-y-0.5"
